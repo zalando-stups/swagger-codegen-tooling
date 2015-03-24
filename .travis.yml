@@ -1,3 +1,8 @@
+language: java
+
+jdk:
+  - openjdk7
+
 scripts:
     - mvn --settings .settings.xml install
     - mvn --settings .settings.xml install -Pintegration
