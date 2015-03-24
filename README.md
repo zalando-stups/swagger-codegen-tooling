@@ -37,7 +37,6 @@ Plugin for Maven that generates pieces of code specified in the 'swagger.yaml' (
 Examples can be found at the integration-test section.
 
 
-
 ## License
 
 Copyright 2015 Zalando SE
