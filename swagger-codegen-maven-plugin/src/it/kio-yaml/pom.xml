@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>de.zalando.maven.plugins.codegen.simple.it</groupId>
+    <groupId>de.zalando.maven.plugins.codegen.kio-yaml.it</groupId>
     <artifactId>simple</artifactId>
     <version>0.0.1.BUILD-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -13,7 +13,7 @@
                 <artifactId>@project.artifactId@</artifactId>
                 <version>@project.version@</version>
                 <configuration>
-                    <apiFile>${project.basedir}/src/main/resources/petstore.json</apiFile>
+                    <apiFile>${project.basedir}/src/main/resources/kio-api.yaml</apiFile>
                     <language>jaxrsinterfaces</language>
                     <apiPackage>de.zalando.api</apiPackage>
                     <modelPackage>de.zalando.model</modelPackage>

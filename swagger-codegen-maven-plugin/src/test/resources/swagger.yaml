@@ -1,0 +1,218 @@
+
+swagger: '2.0'
+info:
+  title: Kio API
+  description: Kio manages applications
+  version: "1.0"
+host: kio.stups.example.org
+schemes:
+  - https
+basePath: /
+produces:
+  - application/json
+paths:
+  /applications:
+    get:
+      summary: Read applications
+      description: |
+        Lists all registered applications
+      operationId: "org.zalando.stups.kio.api/read-applications"
+      tags:
+        - Applications
+      responses:
+        200:
+          description: List of all applications
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ApplicationSummary'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /applications/{application_id}:
+    get:
+      summary: Read application
+      description: |
+        Returns details about one application
+      operationId: "org.zalando.stups.kio.api/read-application"
+      tags:
+        - Applications
+      parameters:
+        - name: application_id
+          in: path
+          type: string
+          description: ID of the application
+          pattern: "^[a-z][a-z0-9-]+$"
+          required: true
+      responses:
+        200:
+          description: Details of one application
+          schema:
+            $ref: '#/definitions/Application'
+        404:
+          description: Not found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+    put:
+      summary: Save application
+      description: |
+        Creates or updates an application
+      operationId: "org.zalando.stups.kio.api/create-or-update-application"
+      tags:
+        - Applications
+      consumes:
+        - application/json
+      parameters:
+        - name: application_id
+          in: path
+          type: string
+          description: ID of the application
+          required: true
+          pattern: "^[a-z][a-z0-9-]+$"
+        - name: application
+          in: body
+          description: Application details that will be saved
+          schema:
+            $ref: '#/definitions/ApplicationDetails'
+          required: true
+      responses:
+        200:
+          description: Application was saved
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      summary: Delete application
+      description: |
+        Deletes an application
+      operationId: "org.zalando.stups.kio.api/delete-application"
+      tags:
+        - Applications
+      parameters:
+        - name: application_id
+          in: path
+          type: string
+          description: ID of the application
+          pattern: "^[a-z][a-z0-9-]+$"
+          required: true
+      responses:
+        200:
+          description: Application was deleted
+        404:
+          description: Not found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /applications/{application_id}/secret:
+    put:
+      summary: Save application secret
+      description: Create or update the applciation's secret
+      operationId: "org.zalando.stups.kio.api/update-application-secret"
+      tags:
+        - Applications
+      consumes:
+        - application/json
+      parameters:
+        - name: application_id
+          in: path
+          type: string
+          description: ID of the application
+          pattern: "^[a-z][a-z0-9-]+$"
+          required: true
+        - name: secret
+          in: body
+          type: string
+          description: The application's new secret
+          required: true
+      responses:
+        200:
+          description: Secret was saved
+        404:
+          description: Not found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  Application:
+    properties:
+      id:
+        type: string
+        description: Unique identifier
+      name:
+        type: string
+        description: A human-readable name
+      team_id:
+        type: string
+        description: ID of the team, responsible for this application
+      description:
+        type: string
+        description: Purpose of this application
+      url:
+        type: string
+        description: Live URL of the application
+      scm_url:
+        type: string
+        description: URL of SCM repository
+      documentation_url:
+        type: string
+        description: URL of documentation
+
+  ApplicationDetails:
+    properties:
+      name:
+        type: string
+        description: A human-readable name
+        minLength: 1
+      team_id:
+        type: string
+        description: ID of the team, responsible for this application
+      description:
+        type: string
+        description: Purpose of this application
+      url:
+        type: string
+        description: Live URL of the application
+      scm_url:
+        type: string
+        description: URL of SCM repository
+      documentation_url:
+        type: string
+        description: URL of documentation
+    required:
+      - name
+      - team_id
+      - description
+      - scm_url
+
+  ApplicationSummary:
+    properties:
+      id:
+        type: string
+        description: Unique identifier
+      name:
+        type: string
+        description: A human-readable name
+      team_id:
+        type: string
+        description: ID of the team, responsible for this application
+
+  Error:
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
