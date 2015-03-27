@@ -34,7 +34,7 @@ Plugin for Maven that generates pieces of code specified in the 'swagger.yaml' (
     </plugin>
 ```
 
-Examples can be found at the integration-test section.
+Examples ([spring-boot-jaxrs](https://github.com/zalando-stups/swagger-codegen-tooling/tree/master/swagger-codegen-maven-plugin/src/it/spring-boot-jersey)) can be found at the integration-test section.
 
 
 ## License
