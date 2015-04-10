@@ -1,5 +1,7 @@
 ##WORK IN PROGRESS -- USE AT YOUR OWN RISK
 
+[![Build Status](https://travis-ci.org/zalando-stups/swagger-codegen-tooling.svg?branch=master)](https://travis-ci.org/zalando-stups/swagger-codegen-tooling)
+
 ###Build
 
     mvn clean install
