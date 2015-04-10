@@ -4,5 +4,5 @@ jdk:
   - openjdk7
 
 script:
-    - mvn --settings .settings.xml install
-    - mvn --settings .settings.xml install -Pintegration
+    - mvn clean install
+    - mvn clean install -Pintegration
