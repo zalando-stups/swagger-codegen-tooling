@@ -1,0 +1,14 @@
+= Swagger-Codegen-Tooling
+:github: https://github.com/zalando-stups/swagger-codegen-tooling
+:githubmaster: {github}/tree/master
+:docslink: {githubmaster}/docs/src/main/asciidoc
+
+include::intro.adoc[]
+
+== Installation
+
+include::install.adoc[]
+
+== Whats inside
+
+TODO

@@ -18,6 +18,7 @@
         <module>swagger-codegen-common</module>
         <module>swagger-codegen-templates</module>
         <module>swagger-codegen-maven-plugin</module>
+        <module>docs</module>
     </modules>
 
     <properties>
