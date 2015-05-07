@@ -1,0 +1,242 @@
+/**
+ * Copyright 2015 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.zalando.stups.swagger.codegen;
+
+import java.io.File;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.ServiceLoader;
+
+import com.wordnik.swagger.codegen.ClientOptInput;
+import com.wordnik.swagger.codegen.ClientOpts;
+import com.wordnik.swagger.codegen.Codegen;
+import com.wordnik.swagger.codegen.CodegenConfig;
+import com.wordnik.swagger.models.Swagger;
+
+import io.swagger.parser.SwaggerParser;
+
+/**
+ * Extracted from Mojo to reuse for easier template-testing.
+ *
+ * @author  jbellmann
+ */
+public class StandaloneCodegenerator {
+
+    private Map<String, CodegenConfig> configs = new HashMap<String, CodegenConfig>();
+
+    private CodegeneratorLogger codeGeneratorLogger = new SystemOutCodegeneratorLogger();
+
+    private String apiFile;
+
+    private String language;
+
+    private File outputDirectory;
+
+    private String apiPackage;
+
+    private String modelPackage;
+
+    public static CodegeneratorBuilder builder() {
+        return new CodegeneratorBuilder();
+    }
+
+    public void generate() throws CodegenerationException {
+
+        if (!getOutputDirectory().exists()) {
+            getOutputDirectory().mkdirs();
+        }
+
+        checkModelPackage();
+
+        checkApiFileExist();
+
+        prepare();
+
+        //
+        ClientOptInput clientOptInput = new ClientOptInput();
+        ClientOpts clientOpts = new ClientOpts();
+        Swagger swagger = null;
+
+        getLog().info("Generate for language : " + language);
+
+        CodegenConfig codegenConfig = getConfig(language);
+        if (codegenConfig == null) {
+            throw new CodegenerationException("No CodegenConfig-Implementation found for " + language);
+        }
+
+        if (!(codegenConfig instanceof ConfigurableCodegenConfig)) {
+            throw new CodegenerationException(
+                "Unable to configure CodegenConfig because not of type ConfigurableCodegenConfig");
+        }
+
+        // config
+        ((ConfigurableCodegenConfig) codegenConfig).setApiPackage(apiPackage);
+        ((ConfigurableCodegenConfig) codegenConfig).setModelPackage(modelPackage);
+
+        clientOptInput.setConfig(codegenConfig);
+        clientOptInput.getConfig().setOutputDir(outputDirectory.getAbsolutePath());
+
+        swagger = new SwaggerParser().read(this.apiFile, clientOptInput.getAuthorizationValues(), true);
+        try {
+            clientOptInput.opts(clientOpts).swagger(swagger);
+            new Codegen().opts(clientOptInput).generate();
+        } catch (Exception e) {
+            throw new CodegenerationException(e.getMessage(), e);
+        }
+
+// project.addCompileSourceRoot(getOutputDirectory().getAbsolutePath());
+        // maybe use this for static resources (static html)
+        // FileSet fileSet = new FileSet();
+        // fileSet.setDirectory("");
+        // project.addResource(null);
+    }
+
+    public String getOutputDirectoryPath() {
+        return getOutputDirectory().getAbsolutePath();
+    }
+
+    private CodegeneratorLogger getLog() {
+        return codeGeneratorLogger;
+    }
+
+    protected void checkModelPackage() {
+        if (modelPackage == null || modelPackage.trim().isEmpty()) {
+            getLog().info("No 'modelPackage' was specified, use configured 'apiPackage' : " + apiPackage);
+            modelPackage = apiPackage;
+        }
+    }
+
+    protected void checkApiFileExist() throws CodegenerationException {
+        File file = new File(apiFile);
+        if (!file.exists()) {
+            throw new CodegenerationException("The 'apiFile' does not exists at : " + apiFile);
+        }
+    }
+
+    public File getOutputDirectory() {
+        return this.outputDirectory;
+    }
+
+    protected void prepare() {
+        List<CodegenConfig> extensions = getExtensions();
+        StringBuilder sb = new StringBuilder();
+
+        for (CodegenConfig config : extensions) {
+            if (sb.toString().length() != 0) {
+                sb.append(", ");
+            }
+
+            sb.append(config.getName());
+            getLog().info("register config : '" + config.getName() + "' with class : " + config.getClass().getName());
+            configs.put(config.getName(), config);
+            // do not know
+// configString = sb.toString();
+        }
+    }
+
+    private CodegenConfig getConfig(final String name) {
+        if (configs.containsKey(name)) {
+            return configs.get(name);
+        } else {
+            try {
+                getLog().info("loading class " + name);
+
+                Class<?> customClass = Class.forName(name);
+                getLog().info("loaded");
+                return (CodegenConfig) customClass.newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException("can't load config-class for '" + name + "'");
+            }
+        }
+    }
+
+    private List<CodegenConfig> getExtensions() {
+        ServiceLoader<CodegenConfig> loader = ServiceLoader.load(CodegenConfig.class);
+        List<CodegenConfig> output = new ArrayList<CodegenConfig>();
+        Iterator<CodegenConfig> itr = loader.iterator();
+        while (itr.hasNext()) {
+            output.add(itr.next());
+        }
+
+        return output;
+    }
+
+    public static class CodegeneratorBuilder {
+
+        private CodegeneratorLogger codeGeneratorLogger = new SystemOutCodegeneratorLogger();
+
+        private String apiFile;
+
+        private String language;
+
+        private File outputDirectory;
+
+        private String apiPackage;
+
+        private String modelPackage;
+
+        public CodegeneratorBuilder withApiFilePath(final String pathToApiFile) {
+            this.apiFile = pathToApiFile;
+            return this;
+        }
+
+        public CodegeneratorBuilder withApiFile(final File apiFile) {
+            this.apiFile = apiFile.getAbsolutePath();
+            return this;
+        }
+
+        public CodegeneratorBuilder forLanguage(final String languageDelimiter) {
+            this.language = languageDelimiter;
+            return this;
+        }
+
+        public CodegeneratorBuilder writeResultsTo(final File outputDirectory) {
+            this.outputDirectory = outputDirectory;
+            return this;
+        }
+
+        public CodegeneratorBuilder withApiPackage(final String apiPackage) {
+            this.apiPackage = apiPackage;
+            return this;
+        }
+
+        public CodegeneratorBuilder withModelPackage(final String modelPackage) {
+            this.modelPackage = modelPackage;
+            return this;
+        }
+
+        public StandaloneCodegenerator build() {
+            StandaloneCodegenerator generator = new StandaloneCodegenerator();
+
+            generator.apiFile = this.apiFile;
+            generator.language = this.language;
+            generator.outputDirectory = this.outputDirectory;
+            generator.apiPackage = this.apiPackage;
+            generator.modelPackage = this.modelPackage;
+
+            if (this.codeGeneratorLogger != null) {
+
+                generator.codeGeneratorLogger = this.codeGeneratorLogger;
+            }
+
+            return generator;
+        }
+    }
+}
