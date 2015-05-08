@@ -10,7 +10,7 @@
 
     <groupId>org.zalando.stups</groupId>
     <artifactId>swagger-codegen-tooling</artifactId>
-    <version>0.4.0</version>
+    <version>0.3.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Swagger-Codegen-Tooling -- Parent</name>
 
@@ -23,7 +23,7 @@
 
     <properties>
         <main.basedir>${basedir}</main.basedir>
-        <argLine />
+        <argLine></argLine>
     </properties>
 
     <build>
@@ -94,8 +94,4 @@
             </plugin>
         </plugins>
     </build>
-
-  <scm>
-    <tag>0.4.0</tag>
-  </scm>
 </project>
