@@ -39,10 +39,6 @@ import org.zalando.stups.swagger.codegen.StandaloneCodegenerator;
 )
 public class CodegenMojo extends AbstractMojo {
 
-// protected Map<String, CodegenConfig> configs = new HashMap<String, CodegenConfig>();
-//
-// protected String configString;
-
     @Parameter(defaultValue = "${project}", readonly = true, required = true)
     private MavenProject project;
 
@@ -61,8 +57,6 @@ public class CodegenMojo extends AbstractMojo {
     @Parameter
     private String modelPackage;
 
-// @Parameter
-// protected Map<String, String> codegenConfig = new HashMap<String, String>();
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
 
@@ -70,123 +64,18 @@ public class CodegenMojo extends AbstractMojo {
                                                                    .forLanguage(language)
                                                                    .writeResultsTo(outputDirectory)
                                                                    .withApiPackage(apiPackage)
-                                                                   .withModelPackage(modelPackage).build();
+                                                                   .withModelPackage(modelPackage)
+                                                                   .withLogger(new MojoCodegeneratorLogger(getLog()))
+                                                                   .build();
 
         try {
             generator.generate();
+
+            //
             project.addCompileSourceRoot(generator.getOutputDirectoryPath());
 
         } catch (CodegenerationException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
-
-// if (!getOutputDirectory().exists()) {
-// getOutputDirectory().mkdirs();
-// }
-//
-// checkModelPackage();
-//
-// checkApiFileExist();
-//
-// prepare();
-//
-// //
-// ClientOptInput clientOptInput = new ClientOptInput();
-// ClientOpts clientOpts = new ClientOpts();
-// Swagger swagger = null;
-//
-// getLog().info("Generate for language : " + language);
-//
-// CodegenConfig codegenConfig = getConfig(language);
-// if (codegenConfig == null) {
-// throw new MojoExecutionException("No CodegenConfig-Implementation found for " + language);
-// }
-//
-// if (!(codegenConfig instanceof ConfigurableCodegenConfig)) {
-// throw new MojoExecutionException(
-// "Unable to configure CodegenConfig because not of type ConfigurableCodegenConfig");
-// }
-//
-// // config
-// ((ConfigurableCodegenConfig) codegenConfig).setApiPackage(apiPackage);
-// ((ConfigurableCodegenConfig) codegenConfig).setModelPackage(modelPackage);
-//
-// clientOptInput.setConfig(codegenConfig);
-// clientOptInput.getConfig().setOutputDir(outputDirectory.getAbsolutePath());
-//
-// swagger = new SwaggerParser().read(this.apiFile, clientOptInput.getAuthorizationValues(), true);
-// try {
-// clientOptInput.opts(clientOpts).swagger(swagger);
-// new Codegen().opts(clientOptInput).generate();
-// } catch (Exception e) {
-// throw new MojoExecutionException(e.getMessage(), e);
-// }
-
-// project.addCompileSourceRoot(getOutputDirectory().getAbsolutePath());
-        // maybe use this for static resources (static html)
-        // FileSet fileSet = new FileSet();
-        // fileSet.setDirectory("");
-        // project.addResource(null);
     }
-
-// protected void checkModelPackage() {
-// if (modelPackage == null || modelPackage.trim().isEmpty()) {
-// getLog().info("No 'modelPackage' was specified, use configured 'apiPackage' : " + apiPackage);
-// modelPackage = apiPackage;
-// }
-// }
-//
-// protected void checkApiFileExist() throws MojoExecutionException {
-// File file = new File(apiFile);
-// if (!file.exists()) {
-// throw new MojoExecutionException("The 'apiFile' does not exists at : " + apiFile);
-// }
-// }
-//
-// public File getOutputDirectory() {
-// return this.outputDirectory;
-// }
-//
-// protected void prepare() {
-// List<CodegenConfig> extensions = getExtensions();
-// StringBuilder sb = new StringBuilder();
-//
-// for (CodegenConfig config : extensions) {
-// if (sb.toString().length() != 0) {
-// sb.append(", ");
-// }
-//
-// sb.append(config.getName());
-// getLog().info("register config : '" + config.getName() + "' with class : " + config.getClass().getName());
-// configs.put(config.getName(), config);
-// configString = sb.toString();
-// }
-// }
-//
-// private CodegenConfig getConfig(final String name) {
-// if (configs.containsKey(name)) {
-// return configs.get(name);
-// } else {
-// try {
-// getLog().info("loading class " + name);
-//
-// Class<?> customClass = Class.forName(name);
-// getLog().info("loaded");
-// return (CodegenConfig) customClass.newInstance();
-// } catch (Exception e) {
-// throw new RuntimeException("can't load config-class for '" + name + "'");
-// }
-// }
-// }
-//
-// private List<CodegenConfig> getExtensions() {
-// ServiceLoader<CodegenConfig> loader = ServiceLoader.load(CodegenConfig.class);
-// List<CodegenConfig> output = new ArrayList<CodegenConfig>();
-// Iterator<CodegenConfig> itr = loader.iterator();
-// while (itr.hasNext()) {
-// output.add(itr.next());
-// }
-//
-// return output;
-// }
 }

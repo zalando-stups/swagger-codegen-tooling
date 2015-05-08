@@ -180,7 +180,7 @@ public class StandaloneCodegenerator {
 
     public static class CodegeneratorBuilder {
 
-        private CodegeneratorLogger codeGeneratorLogger = new SystemOutCodegeneratorLogger();
+        private CodegeneratorLogger codeGeneratorLogger;
 
         private String apiFile;
 
@@ -219,6 +219,11 @@ public class StandaloneCodegenerator {
 
         public CodegeneratorBuilder withModelPackage(final String modelPackage) {
             this.modelPackage = modelPackage;
+            return this;
+        }
+
+        public CodegeneratorBuilder withLogger(final CodegeneratorLogger codegeneratorLogger) {
+            this.codeGeneratorLogger = codegeneratorLogger;
             return this;
         }
 

@@ -66,14 +66,14 @@ public class SpringInterfaces extends JavaClientCodegen implements CodegenConfig
     @Override
     public List<SupportingFile> supportingFiles() {
         supportingFiles.clear();
-        supportingFiles.add(new SupportingFile("ApiException.mustache", (apiPackage()).replace(".", File.separator),
-                "ApiException.java"));
-        supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache", (apiPackage()).replace(".", File.separator),
-                "ApiOriginFilter.java"));
-        supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache",
-                (apiPackage()).replace(".", File.separator), "ApiResponseMessage.java"));
-        supportingFiles.add(new SupportingFile("NotFoundException.mustache",
-                (apiPackage()).replace(".", File.separator), "NotFoundException.java"));
+// supportingFiles.add(new SupportingFile("ApiException.mustache", (apiPackage()).replace(".", File.separator),
+// "ApiException.java"));
+// supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache", (apiPackage()).replace(".", File.separator),
+// "ApiOriginFilter.java"));
+// supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache",
+// (apiPackage()).replace(".", File.separator), "ApiResponseMessage.java"));
+// supportingFiles.add(new SupportingFile("NotFoundException.mustache",
+// (apiPackage()).replace(".", File.separator), "NotFoundException.java"));
 
         languageSpecificPrimitives = new HashSet<String>(Arrays.asList("String", "boolean", "Boolean", "Double",
                     "Integer", "Long", "Float"));
@@ -169,21 +169,24 @@ public class SpringInterfaces extends JavaClientCodegen implements CodegenConfig
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
                     if (end > 0) {
-                        operation.returnType = rt.substring("List<".length(), end);
+
+                        // operation.returnType = rt.substring("List<".length(), end);
                         operation.returnContainer = "List";
                     }
                 } else if (operation.returnType.startsWith("Map")) {
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
                     if (end > 0) {
-                        operation.returnType = rt.substring("Map<".length(), end);
+
+                        // operation.returnType = rt.substring("Map<".length(), end);
                         operation.returnContainer = "Map";
                     }
                 } else if (operation.returnType.startsWith("Set")) {
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
                     if (end > 0) {
-                        operation.returnType = rt.substring("Set<".length(), end);
+
+                        // operation.returnType = rt.substring("Set<".length(), end);
                         operation.returnContainer = "Set";
                     }
                 }

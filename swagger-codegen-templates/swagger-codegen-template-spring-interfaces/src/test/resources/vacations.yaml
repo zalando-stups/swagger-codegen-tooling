@@ -1,0 +1,140 @@
+# this is an example of the Uber API
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: vacations API
+  description: Request for leave via rest
+  version: "1.0.0"
+
+externalDocs:
+  description: STUPS documentation
+  url: http://stups.readthedocs.org/
+
+# will be prefixed to all paths
+produces:
+  - application/json
+paths:
+  /vacations:
+    get:
+      summary: Requests for leave
+      description: |
+        Later.
+      tags:
+        - Vacations
+      #methodname
+      operationId: getVacations
+      responses:
+        200:
+          description: An List of vacations
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Vacation'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create new Request for leave
+      description: |
+        Later.
+      tags:
+        - Vacations
+      #methodname
+      operationId: createNewVacation
+      parameters:
+        - name: vacation
+          in: body
+          description: Later
+          schema:
+            $ref: '#/definitions/Vacation'
+      responses:
+        200:
+          description: An request for leave with id that was created
+          schema:
+            $ref: '#/definitions/Vacation'
+  /vacations/{id}:
+    get:
+      summary: Request for leave by id
+      description: |
+        Later.
+      tags:
+        - Vacations
+      #methodname
+      operationId: getVacationById
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          description: Later
+      responses:
+        200:
+          description: An request for leave with id
+          schema:
+            $ref: '#/definitions/Vacation'
+    delete:
+      summary: Request for leave by id
+      description: |
+        Later.
+      tags:
+        - Vacations
+      #methodname
+      operationId: deleteVacation
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          description: Later
+      responses:
+        200:
+          description: An request for leave with id that was deleted
+          schema:
+            $ref: '#/definitions/Vacation'
+    put:
+      summary: Update Request for leave
+      description: |
+        Later.
+      tags:
+        - Vacations
+      #methodname
+      operationId: updateVacation
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          description: Later
+        - name: vacation
+          in: body
+          schema:
+            $ref: '#/definitions/Vacation'
+      responses:
+        200:
+          description: An request for leave with id that was updated
+          schema:
+            $ref: '#/definitions/Vacation'
+definitions:
+  Vacation:
+    properties:
+      from:
+        type: integer
+        format: int32
+        description: Later.
+      until:
+        type: integer
+        format: int32
+        description: Description of product.
+      user:
+        type: string
+        description: Display name of product.
+      comment:
+        type: string
+        description: Capacity of product. For example, 4 people.
+  Error:
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
