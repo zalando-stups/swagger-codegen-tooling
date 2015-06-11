@@ -24,11 +24,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 
-import com.wordnik.swagger.codegen.ClientOptInput;
-import com.wordnik.swagger.codegen.ClientOpts;
-import com.wordnik.swagger.codegen.Codegen;
-import com.wordnik.swagger.codegen.CodegenConfig;
-import com.wordnik.swagger.models.Swagger;
+import io.swagger.codegen.ClientOptInput;
+import io.swagger.codegen.ClientOpts;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.DefaultGenerator;
+
+import io.swagger.models.Swagger;
 
 import io.swagger.parser.SwaggerParser;
 
@@ -81,14 +82,12 @@ public class StandaloneCodegenerator {
             throw new CodegenerationException("No CodegenConfig-Implementation found for " + language);
         }
 
-        if (!(codegenConfig instanceof ConfigurableCodegenConfig)) {
-            throw new CodegenerationException(
-                "Unable to configure CodegenConfig because not of type ConfigurableCodegenConfig");
-        }
+        if (codegenConfig instanceof ConfigurableCodegenConfig) {
 
-        // config
-        ((ConfigurableCodegenConfig) codegenConfig).setApiPackage(apiPackage);
-        ((ConfigurableCodegenConfig) codegenConfig).setModelPackage(modelPackage);
+            // config
+            ((ConfigurableCodegenConfig) codegenConfig).setApiPackage(apiPackage);
+            ((ConfigurableCodegenConfig) codegenConfig).setModelPackage(modelPackage);
+        }
 
         clientOptInput.setConfig(codegenConfig);
         clientOptInput.getConfig().setOutputDir(outputDirectory.getAbsolutePath());
@@ -96,7 +95,7 @@ public class StandaloneCodegenerator {
         swagger = new SwaggerParser().read(this.apiFile, clientOptInput.getAuthorizationValues(), true);
         try {
             clientOptInput.opts(clientOpts).swagger(swagger);
-            new Codegen().opts(clientOptInput).generate();
+            new DefaultGenerator().opts(clientOptInput).generate();
         } catch (Exception e) {
             throw new CodegenerationException(e.getMessage(), e);
         }
@@ -159,10 +158,10 @@ public class StandaloneCodegenerator {
                 getLog().info("loading class " + name);
 
                 Class<?> customClass = Class.forName(name);
-                getLog().info("loaded");
+                getLog().info("loaded " + name);
                 return (CodegenConfig) customClass.newInstance();
             } catch (Exception e) {
-                throw new RuntimeException("can't load config-class for '" + name + "'");
+                throw new RuntimeException("can't load config-class for '" + name + "'", e);
             }
         }
     }

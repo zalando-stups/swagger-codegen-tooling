@@ -5,7 +5,7 @@ import java.util.List;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
-import com.wordnik.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiParam;
 
 import de.zalando.api.UserApi;
 

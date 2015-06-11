@@ -5,11 +5,11 @@ import java.util.List;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
-import com.wordnik.swagger.annotations.ApiParam;
-
 import de.zalando.api.UserApi;
 
 import de.zalando.model.User;
+
+import io.swagger.annotations.ApiParam;
 
 public class UserApiImpl implements UserApi {
 

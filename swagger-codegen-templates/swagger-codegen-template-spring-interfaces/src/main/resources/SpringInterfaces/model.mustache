@@ -3,7 +3,7 @@ package {{package}};
 {{#imports}}import {{import}};
 {{/imports}}
 
-import com.wordnik.swagger.annotations.*;
+import io.swagger.annotations.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 {{#models}}
 
@@ -26,7 +26,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}}{{/parent}} {
    * minimum: {{minimum}}{{/minimum}}{{#maximum}}
    * maximum: {{maximum}}{{/maximum}}
    **/
-  @ApiModelProperty(required = {{required}}, value = "{{{description}}}")
+  @ApiModelProperty({{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
   @JsonProperty("{{name}}")
   public {{{datatypeWithEnum}}} {{getter}}() {
     return {{name}};

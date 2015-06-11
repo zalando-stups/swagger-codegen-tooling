@@ -51,7 +51,7 @@ public class CodegenMojo extends AbstractMojo {
     @Parameter(required = true)
     private String language;
 
-    @Parameter(required = true)
+    @Parameter
     private String apiPackage;
 
     @Parameter
