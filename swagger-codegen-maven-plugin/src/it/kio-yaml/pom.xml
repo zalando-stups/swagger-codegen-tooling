@@ -17,6 +17,8 @@
                     <language>jaxrsinterfaces</language>
                     <apiPackage>de.zalando.api</apiPackage>
                     <modelPackage>de.zalando.model</modelPackage>
+                    <yamlToJson>true</yamlToJson>
+                    <yamlToJsonOutputDirectory>${project.build.directory}/classes</yamlToJsonOutputDirectory>
                 </configuration>
                 <dependencies>
                     <dependency>

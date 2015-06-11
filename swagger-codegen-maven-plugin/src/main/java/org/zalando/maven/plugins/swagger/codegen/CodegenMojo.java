@@ -16,6 +16,12 @@
 package org.zalando.maven.plugins.swagger.codegen;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import java.nio.file.Files;
+
+import org.apache.commons.io.IOUtils;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -28,6 +34,11 @@ import org.apache.maven.project.MavenProject;
 
 import org.zalando.stups.swagger.codegen.CodegenerationException;
 import org.zalando.stups.swagger.codegen.StandaloneCodegenerator;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.swagger.util.Yaml;
 
 /**
  * @author  jbellmann
@@ -57,6 +68,12 @@ public class CodegenMojo extends AbstractMojo {
     @Parameter
     private String modelPackage;
 
+    @Parameter
+    private boolean yamlToJson = false;
+
+    @Parameter(required = true, defaultValue = "${project.build.directory}/classes")
+    private File yamlToJsonOutputDirectory;
+
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
 
@@ -74,8 +91,53 @@ public class CodegenMojo extends AbstractMojo {
             //
             project.addCompileSourceRoot(generator.getOutputDirectoryPath());
 
+            if (yamlToJson) {
+                getLog().info("Generate .json file from .yaml");
+                if (!yamlToJsonOutputDirectory.exists()) {
+                    yamlToJsonOutputDirectory.mkdirs();
+                    getLog().info("OutputDirectory created");
+                }
+
+                File jsonFile = new File(yamlToJsonOutputDirectory, getYamlFilename() + ".json");
+                FileWriter fileWriter = null;
+                try {
+
+                    fileWriter = new FileWriter(jsonFile);
+                    fileWriter.write(getYamlFileContentAsJson());
+                    fileWriter.flush();
+                    getLog().info("File written to " + jsonFile.getAbsolutePath());
+                } catch (Exception e) {
+                    throw new MojoExecutionException(e.getMessage(), e);
+                } finally {
+                    IOUtils.closeQuietly(fileWriter);
+                }
+            }
+
         } catch (CodegenerationException e) {
             throw new MojoExecutionException(e.getMessage(), e);
+        }
+    }
+
+    protected String getYamlFileContentAsJson() throws IOException {
+        String data = new String(Files.readAllBytes(java.nio.file.Paths.get(new File(apiFile).toURI())));
+
+        ObjectMapper yamlMapper = Yaml.mapper();
+        JsonNode rootNode = yamlMapper.readTree(data);
+
+        // must have swagger node set
+        JsonNode swaggerNode = rootNode.get("swagger");
+
+        return rootNode.toString();
+    }
+
+    protected String getYamlFilename() throws MojoExecutionException {
+
+        File file = new File(apiFile);
+        if (!file.exists()) {
+            throw new MojoExecutionException("Api-File not found: " + apiFile);
+        } else {
+            String filename = file.getName();
+            return filename.substring(0, filename.indexOf("."));
         }
     }
 }
