@@ -82,14 +82,12 @@ public class StandaloneCodegenerator {
             throw new CodegenerationException("No CodegenConfig-Implementation found for " + language);
         }
 
-        if (!(codegenConfig instanceof ConfigurableCodegenConfig)) {
-            throw new CodegenerationException(
-                "Unable to configure CodegenConfig because not of type ConfigurableCodegenConfig");
-        }
+        if (codegenConfig instanceof ConfigurableCodegenConfig) {
 
-        // config
-        ((ConfigurableCodegenConfig) codegenConfig).setApiPackage(apiPackage);
-        ((ConfigurableCodegenConfig) codegenConfig).setModelPackage(modelPackage);
+            // config
+            ((ConfigurableCodegenConfig) codegenConfig).setApiPackage(apiPackage);
+            ((ConfigurableCodegenConfig) codegenConfig).setModelPackage(modelPackage);
+        }
 
         clientOptInput.setConfig(codegenConfig);
         clientOptInput.getConfig().setOutputDir(outputDirectory.getAbsolutePath());
