@@ -19,7 +19,7 @@ import org.assertj.core.api.Assertions;
 
 import org.junit.Test;
 
-import com.wordnik.swagger.codegen.DefaultCodegen;
+import io.swagger.codegen.DefaultCodegen;
 
 /**
  * @author  jbellmann

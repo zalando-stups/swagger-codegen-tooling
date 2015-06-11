@@ -25,8 +25,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.wordnik.swagger.models.Swagger;
-import com.wordnik.swagger.util.Yaml;
+import io.swagger.models.Swagger;
+
+import io.swagger.util.Yaml;
 
 /**
  * @author  jbellmann
