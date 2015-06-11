@@ -14,7 +14,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.wordnik</groupId>
+            <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
             <version>1.5.2-M1</version>
         </dependency>
