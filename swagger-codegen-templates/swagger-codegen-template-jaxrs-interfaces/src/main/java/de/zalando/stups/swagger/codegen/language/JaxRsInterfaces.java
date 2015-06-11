@@ -25,15 +25,16 @@ import java.util.Map;
 
 import org.zalando.stups.swagger.codegen.ConfigurableCodegenConfig;
 
-import com.wordnik.swagger.codegen.CodegenConfig;
-import com.wordnik.swagger.codegen.CodegenOperation;
-import com.wordnik.swagger.codegen.CodegenType;
-import com.wordnik.swagger.codegen.SupportingFile;
-import com.wordnik.swagger.codegen.languages.JavaClientCodegen;
-import com.wordnik.swagger.models.Operation;
-import com.wordnik.swagger.models.properties.ArrayProperty;
-import com.wordnik.swagger.models.properties.MapProperty;
-import com.wordnik.swagger.models.properties.Property;
+import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenType;
+import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.languages.JavaClientCodegen;
+
+import io.swagger.models.Operation;
+import io.swagger.models.properties.ArrayProperty;
+import io.swagger.models.properties.MapProperty;
+import io.swagger.models.properties.Property;
 
 /**
  * https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen/src/main/java/com/wordnik/swagger/codegen/languages/JaxRSServerCodegen.java.
