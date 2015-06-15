@@ -44,6 +44,16 @@ public class YamlToJsonTest {
         System.out.println(rootNodeString);
     }
 
+    @Test
+    public void transformWithConverter() throws URISyntaxException {
+        YamlToJson converter = YamlToJson.builder()
+                                         .withYamlInputPath(java.nio.file.Paths.get(
+                                                 YamlToJsonTest.class.getResource("/kio-api.yaml").toURI())
+                                                 .toAbsolutePath().toString())
+                                         .withOutputDirectoryPath(System.getProperty("user.dir") + "/target").build();
+        converter.convert();
+    }
+
     protected static String getResourceContent(final String classpathResource) {
         try {
             return new String(Files.readAllBytes(
