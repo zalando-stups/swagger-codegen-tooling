@@ -99,12 +99,6 @@ public class StandaloneCodegenerator {
         } catch (Exception e) {
             throw new CodegenerationException(e.getMessage(), e);
         }
-
-// project.addCompileSourceRoot(getOutputDirectory().getAbsolutePath());
-        // maybe use this for static resources (static html)
-        // FileSet fileSet = new FileSet();
-        // fileSet.setDirectory("");
-        // project.addResource(null);
     }
 
     public String getOutputDirectoryPath() {

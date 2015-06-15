@@ -22,16 +22,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 // GENERATED CLASS, DO NOT EDIT
 //
 
-@Api(value = "/{{baseName}}", description = "the {{baseName}} API")
+@Api(value = "/{{baseName}}")
 {{#operations}}
 public interface {{classname}} {
 
 {{#operation}}
   @RequestMapping(value="/{{baseName}}{{path}}",method=RequestMethod.{{httpMethod}}{{#hasConsumes}},consumes={ {{#consumes}}"{{mediaType}}"{{#hasMore}},{{/hasMore}}{{/consumes}} }{{/hasConsumes}} {{#hasProduces}}, produces={ {{#produces}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }{{/hasProduces}})
-  @ApiOperation(value = "{{{summary}}}", notes = "{{{notes}}}", response = {{{returnBaseType}}}.class{{#returnContainer}}, responseContainer = "{{{returnContainer}}}"{{/returnContainer}})
+  @ApiOperation(value = "{{{summary}}}", notes = "{{{notes}}}"{{#returnBaseType}}, response = {{{returnBaseType}}}.class{{/returnBaseType}}{{#returnContainer}}, responseContainer = "{{{returnContainer}}}"{{/returnContainer}})
   @ApiResponses(value = { {{#responses}}
-    @ApiResponse(code = {{{code}}}, message = "{{{message}}}"){{#hasMore}},
-    {{/hasMore}}{{/responses}} })
+    @ApiResponse(code = {{{code}}}, message = "{{{message}}}"){{#hasMore}},{{/hasMore}}{{/responses}}
+  })
   public {{{returnType}}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},
     {{/hasMore}}{{/allParams}});
 
