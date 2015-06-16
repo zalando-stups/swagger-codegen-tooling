@@ -48,6 +48,40 @@ public class SpringInterfacesGeneratorTest {
         generator.generate();
     }
 
+    @Test
+    public void testGenerationFromYamlRepositoryEntity() throws CodegenerationException {
+        StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFile(getApiYamlFile())
+                                                                   .forLanguage("springinterfacesResponseEntity")
+                                                                   .withApiPackage("de.zalando.swagger.api")
+                                                                   .withModelPackage("de.zalando.swagger.model")
+                                                                   .writeResultsTo(generateOutputDir()).build();
+
+        generator.generate();
+    }
+
+    @Test
+    public void testGenerationFromYamlRepositoryEntityNoSwaggerAnnotations() throws CodegenerationException {
+        StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFile(getApiYamlFile())
+                                                                   .forLanguage(
+                                                                       "springinterfacesResponseEntityNoSwaggerAnnotations")
+                                                                   .withApiPackage("de.zalando.swagger.api")
+                                                                   .withModelPackage("de.zalando.swagger.model")
+                                                                   .writeResultsTo(generateOutputDir()).build();
+
+        generator.generate();
+    }
+
+    @Test
+    public void testGenerationFromYamlNoSwaggerAnnotations() throws CodegenerationException {
+        StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFile(getApiYamlFile())
+                                                                   .forLanguage("springinterfacesNoSwaggerAnnotations")
+                                                                   .withApiPackage("de.zalando.swagger.api")
+                                                                   .withModelPackage("de.zalando.swagger.model")
+                                                                   .writeResultsTo(generateOutputDir()).build();
+
+        generator.generate();
+    }
+
     protected File getApiJsonFile() {
         return new File(getClass().getResource("/petstore.json").getFile());
     }
