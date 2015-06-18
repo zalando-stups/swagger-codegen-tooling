@@ -24,6 +24,8 @@ import org.junit.Test;
 import org.zalando.stups.swagger.codegen.CodegenerationException;
 import org.zalando.stups.swagger.codegen.StandaloneCodegenerator;
 
+import com.google.common.collect.Lists;
+
 public class SpringInterfacesGeneratorTest {
 
     @Test
@@ -56,6 +58,20 @@ public class SpringInterfacesGeneratorTest {
                                                                    .withModelPackage("de.zalando.swagger.model")
                                                                    .writeResultsTo(generateOutputDir())
                                                                    .skipModelgeneration(true).build();
+
+        generator.generate();
+    }
+
+    @Test
+    public void testGenerationFromYamlExcludeModel() throws CodegenerationException {
+        StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFile(getApiYamlFile())
+                                                                   .forLanguage("springinterfaces")
+                                                                   .withApiPackage("de.zalando.swagger.api")
+                                                                   .withModelPackage("de.zalando.swagger.model")
+                                                                   .writeResultsTo(generateOutputDir())
+                                                                   .skipModelgeneration(false)
+                                                                   .withModelsExcluded(Lists.newArrayList("Vacation"))
+                                                                   .build();
 
         generator.generate();
     }

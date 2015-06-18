@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ServiceLoader;
 
 import io.swagger.codegen.ClientOptInput;
@@ -56,6 +57,8 @@ public class StandaloneCodegenerator {
     private String modelPackage;
 
     private boolean skipModelgeneration;
+
+    private List<String> excludedModels;
 
     public static CodegeneratorBuilder builder() {
         return new CodegeneratorBuilder();
@@ -99,6 +102,15 @@ public class StandaloneCodegenerator {
         if (skipModelgeneration) {
             getLog().info("MODEL-GENERATION DISABLED ...");
             swagger.setDefinitions(new HashMap<String, Model>(0));
+        } else if (!excludedModels.isEmpty()) {
+            Iterator<Entry<String, Model>> it = swagger.getDefinitions().entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<String, Model> entry = it.next();
+                if (excludedModels.contains(entry.getKey())) {
+                    getLog().info("REMOVE MODEL '" + entry.getKey() + "' FROM GENERATION ...");
+                    it.remove();
+                }
+            }
         }
 
         try {
@@ -193,7 +205,9 @@ public class StandaloneCodegenerator {
 
         private String modelPackage;
 
-        private boolean skipModelgeneration;
+        private boolean skipModelgeneration = false;
+
+        private List<String> excludedModels = new ArrayList<String>(0);
 
         public CodegeneratorBuilder withApiFilePath(final String pathToApiFile) {
             this.apiFile = pathToApiFile;
@@ -235,6 +249,11 @@ public class StandaloneCodegenerator {
             return this;
         }
 
+        public CodegeneratorBuilder withModelsExcluded(final List<String> excludedModels) {
+            this.excludedModels = excludedModels;
+            return this;
+        }
+
         public StandaloneCodegenerator build() {
             StandaloneCodegenerator generator = new StandaloneCodegenerator();
 
@@ -244,6 +263,7 @@ public class StandaloneCodegenerator {
             generator.apiPackage = this.apiPackage;
             generator.modelPackage = this.modelPackage;
             generator.skipModelgeneration = this.skipModelgeneration;
+            generator.excludedModels = this.excludedModels;
 
             if (this.codeGeneratorLogger != null) {
 

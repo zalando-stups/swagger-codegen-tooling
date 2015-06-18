@@ -17,6 +17,8 @@ package org.zalando.maven.plugins.swagger.codegen;
 
 import java.io.File;
 
+import java.util.ArrayList;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -62,6 +64,9 @@ public class CodegenMojo extends AbstractMojo {
     private boolean skipModelgeneration = false;
 
     @Parameter
+    private ArrayList<String> excludedModels = new ArrayList<String>();
+
+    @Parameter
     private boolean yamlToJson = false;
 
     @Parameter(required = true, defaultValue = "${project.build.directory}/classes")
@@ -76,7 +81,8 @@ public class CodegenMojo extends AbstractMojo {
                                                                    .withApiPackage(apiPackage)
                                                                    .withModelPackage(modelPackage)
                                                                    .withLogger(new MojoCodegeneratorLogger(getLog()))
-                                                                   .skipModelgeneration(skipModelgeneration).build();
+                                                                   .skipModelgeneration(skipModelgeneration)
+                                                                   .withModelsExcluded(excludedModels).build();
 
         try {
             generator.generate();
