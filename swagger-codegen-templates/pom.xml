@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.zalando.stups</groupId>
         <artifactId>swagger-codegen-tooling</artifactId>
-        <version>0.4.7</version>
+        <version>0.4.8-SNAPSHOT</version>
     </parent>
     <artifactId>swagger-codegen-templates</artifactId>
     <name>Swagger-Codegen-Templates -- Parent</name>
