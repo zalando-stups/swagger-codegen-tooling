@@ -25,7 +25,7 @@ public interface {{classname}} {
 
 {{#operation}}
   @RequestMapping(value="/{{baseName}}{{path}}",method=RequestMethod.{{httpMethod}}{{#hasConsumes}},consumes={ {{#consumes}}"{{mediaType}}"{{#hasMore}},{{/hasMore}}{{/consumes}} }{{/hasConsumes}} {{#hasProduces}}, produces={ {{#produces}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }{{/hasProduces}})
-  public ResponseEntity<{{{returnType}}}> {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},
+  {{#returnType}}ResponseEntity<{{{returnType}}}>{{/returnType}}{{^returnType}}void{{/returnType}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},
     {{/hasMore}}{{/allParams}});
 
 {{/operation}}
