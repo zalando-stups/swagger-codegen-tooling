@@ -29,6 +29,7 @@ import io.swagger.codegen.ClientOpts;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.DefaultGenerator;
 
+import io.swagger.models.Model;
 import io.swagger.models.Swagger;
 
 import io.swagger.parser.SwaggerParser;
@@ -53,6 +54,8 @@ public class StandaloneCodegenerator {
     private String apiPackage;
 
     private String modelPackage;
+
+    private boolean skipModelgeneration;
 
     public static CodegeneratorBuilder builder() {
         return new CodegeneratorBuilder();
@@ -93,6 +96,11 @@ public class StandaloneCodegenerator {
         clientOptInput.getConfig().setOutputDir(outputDirectory.getAbsolutePath());
 
         swagger = new SwaggerParser().read(this.apiFile, clientOptInput.getAuthorizationValues(), true);
+        if (skipModelgeneration) {
+            getLog().info("MODEL-GENERATION DISABLED ...");
+            swagger.setDefinitions(new HashMap<String, Model>(0));
+        }
+
         try {
             clientOptInput.opts(clientOpts).swagger(swagger);
             new DefaultGenerator().opts(clientOptInput).generate();
@@ -185,6 +193,8 @@ public class StandaloneCodegenerator {
 
         private String modelPackage;
 
+        private boolean skipModelgeneration;
+
         public CodegeneratorBuilder withApiFilePath(final String pathToApiFile) {
             this.apiFile = pathToApiFile;
             return this;
@@ -220,6 +230,11 @@ public class StandaloneCodegenerator {
             return this;
         }
 
+        public CodegeneratorBuilder skipModelgeneration(final boolean skip) {
+            this.skipModelgeneration = skip;
+            return this;
+        }
+
         public StandaloneCodegenerator build() {
             StandaloneCodegenerator generator = new StandaloneCodegenerator();
 
@@ -228,6 +243,7 @@ public class StandaloneCodegenerator {
             generator.outputDirectory = this.outputDirectory;
             generator.apiPackage = this.apiPackage;
             generator.modelPackage = this.modelPackage;
+            generator.skipModelgeneration = this.skipModelgeneration;
 
             if (this.codeGeneratorLogger != null) {
 

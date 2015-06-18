@@ -25,6 +25,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
+
 import org.zalando.stups.swagger.codegen.CodegenerationException;
 import org.zalando.stups.swagger.codegen.StandaloneCodegenerator;
 import org.zalando.stups.swagger.codegen.YamlToJson;
@@ -57,6 +58,9 @@ public class CodegenMojo extends AbstractMojo {
     @Parameter
     private String modelPackage;
 
+    @Parameter(defaultValue = "false")
+    private boolean skipModelgeneration = false;
+
     @Parameter
     private boolean yamlToJson = false;
 
@@ -72,7 +76,7 @@ public class CodegenMojo extends AbstractMojo {
                                                                    .withApiPackage(apiPackage)
                                                                    .withModelPackage(modelPackage)
                                                                    .withLogger(new MojoCodegeneratorLogger(getLog()))
-                                                                   .build();
+                                                                   .skipModelgeneration(skipModelgeneration).build();
 
         try {
             generator.generate();
