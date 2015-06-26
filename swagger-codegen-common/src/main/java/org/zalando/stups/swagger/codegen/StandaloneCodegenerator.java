@@ -31,6 +31,7 @@ import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.DefaultGenerator;
 
 import io.swagger.models.Model;
+import io.swagger.models.Path;
 import io.swagger.models.Swagger;
 
 import io.swagger.parser.SwaggerParser;
@@ -55,6 +56,8 @@ public class StandaloneCodegenerator {
     private String apiPackage;
 
     private String modelPackage;
+
+    private boolean skipApigeneration;
 
     private boolean skipModelgeneration;
 
@@ -99,6 +102,12 @@ public class StandaloneCodegenerator {
         clientOptInput.getConfig().setOutputDir(outputDirectory.getAbsolutePath());
 
         swagger = new SwaggerParser().read(this.apiFile, clientOptInput.getAuthorizationValues(), true);
+
+        if (skipApigeneration) {
+            getLog().info("API-GENERATION DISABLED ...");
+            swagger.setPaths(new HashMap<String, Path>(0));
+        }
+
         if (skipModelgeneration) {
             getLog().info("MODEL-GENERATION DISABLED ...");
             swagger.setDefinitions(new HashMap<String, Model>(0));
@@ -207,6 +216,8 @@ public class StandaloneCodegenerator {
 
         private boolean skipModelgeneration = false;
 
+        private boolean skipApigeneration = false;
+
         private List<String> excludedModels = new ArrayList<String>(0);
 
         public CodegeneratorBuilder withApiFilePath(final String pathToApiFile) {
@@ -254,6 +265,11 @@ public class StandaloneCodegenerator {
             return this;
         }
 
+        public CodegeneratorBuilder skipApigeneration(final boolean skip) {
+            this.skipApigeneration = skip;
+            return this;
+        }
+
         public StandaloneCodegenerator build() {
             StandaloneCodegenerator generator = new StandaloneCodegenerator();
 
@@ -264,6 +280,7 @@ public class StandaloneCodegenerator {
             generator.modelPackage = this.modelPackage;
             generator.skipModelgeneration = this.skipModelgeneration;
             generator.excludedModels = this.excludedModels;
+            generator.skipApigeneration = this.skipApigeneration;
 
             if (this.codeGeneratorLogger != null) {
 

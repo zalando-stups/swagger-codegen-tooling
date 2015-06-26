@@ -63,6 +63,9 @@ public class CodegenMojo extends AbstractMojo {
     @Parameter(defaultValue = "false")
     private boolean skipModelgeneration = false;
 
+    @Parameter(defaultValue = "false")
+    private boolean skipApigeneration = false;
+
     @Parameter
     private ArrayList<String> excludedModels = new ArrayList<String>();
 
@@ -82,6 +85,7 @@ public class CodegenMojo extends AbstractMojo {
                                                                    .withModelPackage(modelPackage)
                                                                    .withLogger(new MojoCodegeneratorLogger(getLog()))
                                                                    .skipModelgeneration(skipModelgeneration)
+                                                                   .skipApigeneration(skipApigeneration)
                                                                    .withModelsExcluded(excludedModels).build();
 
         try {

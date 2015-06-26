@@ -63,6 +63,18 @@ public class SpringInterfacesGeneratorTest {
     }
 
     @Test
+    public void testGenerationFromYamlSkipApi() throws CodegenerationException {
+        StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFile(getApiYamlFile())
+                                                                   .forLanguage("springinterfaces")
+                                                                   .withApiPackage("de.zalando.swagger.api")
+                                                                   .withModelPackage("de.zalando.swagger.model")
+                                                                   .writeResultsTo(generateOutputDir())
+                                                                   .skipApigeneration(true).build();
+
+        generator.generate();
+    }
+
+    @Test
     public void testGenerationFromYamlExcludeModel() throws CodegenerationException {
         StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFile(getApiYamlFile())
                                                                    .forLanguage("springinterfaces")
