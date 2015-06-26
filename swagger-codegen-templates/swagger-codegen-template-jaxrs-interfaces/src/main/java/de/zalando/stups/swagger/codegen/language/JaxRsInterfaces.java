@@ -201,4 +201,13 @@ public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig,
     public void setModelPackage(final String modelPackage) {
         this.modelPackage = modelPackage;
     }
+
+    @Override
+    public boolean is303Supported() {
+        return false;
+    }
+
+    @Override
+    public void enable303() { }
+
 }
