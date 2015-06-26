@@ -61,6 +61,8 @@ public class StandaloneCodegenerator {
 
     private boolean skipModelgeneration;
 
+    private boolean enable303;
+
     private List<String> excludedModels;
 
     public static CodegeneratorBuilder builder() {
@@ -96,6 +98,11 @@ public class StandaloneCodegenerator {
             // config
             ((ConfigurableCodegenConfig) codegenConfig).setApiPackage(apiPackage);
             ((ConfigurableCodegenConfig) codegenConfig).setModelPackage(modelPackage);
+            if (((ConfigurableCodegenConfig) codegenConfig).is303Supported()) {
+                if (enable303) {
+                    ((ConfigurableCodegenConfig) codegenConfig).enable303();
+                }
+            }
         }
 
         clientOptInput.setConfig(codegenConfig);
@@ -218,6 +225,8 @@ public class StandaloneCodegenerator {
 
         private boolean skipApigeneration = false;
 
+        private boolean enable303 = false;
+
         private List<String> excludedModels = new ArrayList<String>(0);
 
         public CodegeneratorBuilder withApiFilePath(final String pathToApiFile) {
@@ -270,6 +279,11 @@ public class StandaloneCodegenerator {
             return this;
         }
 
+        public CodegeneratorBuilder enable303(final boolean enable303) {
+            this.enable303 = enable303;
+            return this;
+        }
+
         public StandaloneCodegenerator build() {
             StandaloneCodegenerator generator = new StandaloneCodegenerator();
 
@@ -281,6 +295,7 @@ public class StandaloneCodegenerator {
             generator.skipModelgeneration = this.skipModelgeneration;
             generator.excludedModels = this.excludedModels;
             generator.skipApigeneration = this.skipApigeneration;
+            generator.enable303 = this.enable303;
 
             if (this.codeGeneratorLogger != null) {
 

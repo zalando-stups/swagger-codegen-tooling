@@ -66,6 +66,9 @@ public class CodegenMojo extends AbstractMojo {
     @Parameter(defaultValue = "false")
     private boolean skipApigeneration = false;
 
+    @Parameter(defaultValue = "false")
+    private boolean enable303 = false;
+
     @Parameter
     private ArrayList<String> excludedModels = new ArrayList<String>();
 
@@ -86,7 +89,8 @@ public class CodegenMojo extends AbstractMojo {
                                                                    .withLogger(new MojoCodegeneratorLogger(getLog()))
                                                                    .skipModelgeneration(skipModelgeneration)
                                                                    .skipApigeneration(skipApigeneration)
-                                                                   .withModelsExcluded(excludedModels).build();
+                                                                   .withModelsExcluded(excludedModels)
+                                                                   .enable303(enable303).build();
 
         try {
             generator.generate();

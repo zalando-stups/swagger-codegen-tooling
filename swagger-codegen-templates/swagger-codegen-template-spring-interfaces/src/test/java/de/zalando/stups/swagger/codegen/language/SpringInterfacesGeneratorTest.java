@@ -106,7 +106,8 @@ public class SpringInterfacesGeneratorTest {
                                                                        "springinterfacesResponseEntityNoSwaggerAnnotations")
                                                                    .withApiPackage("de.zalando.swagger.api")
                                                                    .withModelPackage("de.zalando.swagger.model")
-                                                                   .writeResultsTo(generateOutputDir()).build();
+                                                                   .writeResultsTo(generateOutputDir()).enable303(true)
+                                                                   .build();
 
         generator.generate();
     }

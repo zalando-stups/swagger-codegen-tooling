@@ -38,4 +38,16 @@ public class SpringInterfacesResponseEntityNoSwaggerAnnotations extends Abstract
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
     }
+
+    @Override
+    public boolean is303Supported() {
+        return true;
+    }
+
+    @Override
+    public void enable303() {
+        modelTemplateFiles.remove("model.mustache");
+        modelTemplateFiles.put("model303.mustache", ".java");
+    }
+
 }

@@ -114,6 +114,9 @@ paths:
             $ref: '#/definitions/Vacation'
 definitions:
   Vacation:
+    required:
+      - from
+      - user
     properties:
       from:
         type: integer

@@ -26,4 +26,8 @@ public interface ConfigurableCodegenConfig {
 
     void setModelPackage(String modelPackage);
 
+    boolean is303Supported();
+
+    void enable303();
+
 }
