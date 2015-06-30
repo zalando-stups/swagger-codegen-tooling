@@ -213,4 +213,12 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
     @Override
     public void enable303() { }
 
+    @Override
+    public boolean isBuilderSupported() {
+        return false;
+    }
+
+    @Override
+    public void enableBuilderSupport() { }
+
 }

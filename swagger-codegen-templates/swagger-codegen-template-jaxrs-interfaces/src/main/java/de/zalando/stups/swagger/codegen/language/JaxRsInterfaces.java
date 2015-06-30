@@ -210,4 +210,12 @@ public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig,
     @Override
     public void enable303() { }
 
+    @Override
+    public boolean isBuilderSupported() {
+        return false;
+    }
+
+    @Override
+    public void enableBuilderSupport() { }
+
 }

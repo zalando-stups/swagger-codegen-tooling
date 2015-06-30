@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.zalando.maven.plugins.codegen.kio-yaml.it</groupId>
-    <artifactId>kio-yaml</artifactId>
+    <artifactId>kio-yaml-with-Builder</artifactId>
     <version>0.0.1.BUILD-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -14,16 +14,17 @@
                 <version>@project.version@</version>
                 <configuration>
                     <apiFile>${project.basedir}/src/main/resources/kio-api.yaml</apiFile>
-                    <language>jaxrsinterfaces</language>
+                    <language>springinterfaces</language>
                     <apiPackage>de.zalando.api</apiPackage>
                     <modelPackage>de.zalando.model</modelPackage>
                     <yamlToJson>true</yamlToJson>
                     <yamlToJsonOutputDirectory>${project.build.directory}/classes</yamlToJsonOutputDirectory>
+                    <enableBuilderSupport>true</enableBuilderSupport>
                 </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.zalando.stups</groupId>
-                        <artifactId>swagger-codegen-template-jaxrs-interfaces</artifactId>
+                        <artifactId>swagger-codegen-template-spring-interfaces</artifactId>
                         <version>@project.version@</version>
                     </dependency>
                 </dependencies>

@@ -50,4 +50,14 @@ public class SpringInterfacesResponseEntityNoSwaggerAnnotations extends Abstract
         modelTemplateFiles.put("model303.mustache", ".java");
     }
 
+    @Override
+    public boolean isBuilderSupported() {
+        return true;
+    }
+
+    @Override
+    public void enableBuilderSupport() {
+        modelTemplateFiles.put("modelBuilder.mustache", "Builder.java");
+    }
+
 }

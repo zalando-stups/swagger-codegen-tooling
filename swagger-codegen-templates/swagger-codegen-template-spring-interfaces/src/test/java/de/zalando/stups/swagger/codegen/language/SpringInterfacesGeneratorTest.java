@@ -113,6 +113,19 @@ public class SpringInterfacesGeneratorTest {
     }
 
     @Test
+    public void testGenerationFromYamlRepositoryEntityNoSwaggerAnnotationsWithBuilder() throws CodegenerationException {
+        StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFile(getApiYamlFile())
+                                                                   .forLanguage(
+                                                                       "springinterfacesResponseEntityNoSwaggerAnnotations")
+                                                                   .withApiPackage("de.zalando.swagger.api")
+                                                                   .withModelPackage("de.zalando.swagger.model")
+                                                                   .writeResultsTo(generateOutputDir()).enable303(true)
+                                                                   .enableBuilderSupport(true).build();
+
+        generator.generate();
+    }
+
+    @Test
     public void testGenerationFromYamlNoSwaggerAnnotations() throws CodegenerationException {
         StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFile(getApiYamlFile())
                                                                    .forLanguage("springinterfacesNoSwaggerAnnotations")

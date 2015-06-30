@@ -72,5 +72,18 @@ public class ConfigurableCodegenConfigTest {
         @Override
         public void enable303() { }
 
+        @Override
+        public boolean isBuilderSupported() {
+
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public void enableBuilderSupport() {
+            // TODO Auto-generated method stub
+
+        }
+
     }
 }

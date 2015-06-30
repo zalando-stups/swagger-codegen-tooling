@@ -30,4 +30,8 @@ public interface ConfigurableCodegenConfig {
 
     void enable303();
 
+    boolean isBuilderSupported();
+
+    void enableBuilderSupport();
+
 }

@@ -63,6 +63,8 @@ public class StandaloneCodegenerator {
 
     private boolean enable303;
 
+    private boolean enableBuilderSupport;
+
     private List<String> excludedModels;
 
     public static CodegeneratorBuilder builder() {
@@ -98,11 +100,27 @@ public class StandaloneCodegenerator {
             // config
             ((ConfigurableCodegenConfig) codegenConfig).setApiPackage(apiPackage);
             ((ConfigurableCodegenConfig) codegenConfig).setModelPackage(modelPackage);
-            if (((ConfigurableCodegenConfig) codegenConfig).is303Supported()) {
-                if (enable303) {
+
+            if (enable303) {
+                getLog().info("JSR 303 enabled ...");
+                if (((ConfigurableCodegenConfig) codegenConfig).is303Supported()) {
+                    getLog().info("and supported by " + language);
                     ((ConfigurableCodegenConfig) codegenConfig).enable303();
+                } else {
+                    getLog().info("but not supported by " + language);
                 }
             }
+
+            if (enableBuilderSupport) {
+                getLog().info("BuilderSupport enabled ...");
+                if (((ConfigurableCodegenConfig) codegenConfig).isBuilderSupported()) {
+                    getLog().info("and supported by : " + language);
+                    ((ConfigurableCodegenConfig) codegenConfig).enableBuilderSupport();
+                } else {
+                    getLog().info("but not supported by : " + language);
+                }
+            }
+
         }
 
         clientOptInput.setConfig(codegenConfig);
@@ -227,6 +245,8 @@ public class StandaloneCodegenerator {
 
         private boolean enable303 = false;
 
+        private boolean enableBuilderSupport = false;
+
         private List<String> excludedModels = new ArrayList<String>(0);
 
         public CodegeneratorBuilder withApiFilePath(final String pathToApiFile) {
@@ -284,6 +304,11 @@ public class StandaloneCodegenerator {
             return this;
         }
 
+        public CodegeneratorBuilder enableBuilderSupport(final boolean enableBuilderSupport) {
+            this.enableBuilderSupport = enableBuilderSupport;
+            return this;
+        }
+
         public StandaloneCodegenerator build() {
             StandaloneCodegenerator generator = new StandaloneCodegenerator();
 
@@ -296,6 +321,7 @@ public class StandaloneCodegenerator {
             generator.excludedModels = this.excludedModels;
             generator.skipApigeneration = this.skipApigeneration;
             generator.enable303 = this.enable303;
+            generator.enableBuilderSupport = this.enableBuilderSupport;
 
             if (this.codeGeneratorLogger != null) {
 
