@@ -10,7 +10,7 @@
 
     <groupId>org.zalando.stups</groupId>
     <artifactId>swagger-codegen-tooling</artifactId>
-    <version>0.4.9</version>
+    <version>0.4.10-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Swagger-Codegen-Tooling -- Parent</name>
 
@@ -31,6 +31,6 @@
         <url>https://github.com/zalando-stups/swagger-codegen-tooling.git</url>
         <connection>scm:git:https://github.com/zalando-stups/swagger-codegen-tooling.git</connection>
         <developerConnection>scm:git:https://github.com/zalando-stups/swagger-codegen-tooling.git</developerConnection>
-        <tag>0.4.9</tag>
+        <tag>HEAD</tag>
     </scm>
 </project>
