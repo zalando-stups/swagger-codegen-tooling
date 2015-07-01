@@ -203,19 +203,24 @@ public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig,
     }
 
     @Override
+    public boolean isBuilderSupported() {
+        return true;
+    }
+
+    @Override
+    public void enableBuilderSupport() {
+        modelTemplateFiles.put("modelBuilder.mustache", "Builder.java");
+    }
+
+    @Override
     public boolean is303Supported() {
         return false;
     }
 
     @Override
-    public void enable303() { }
-
-    @Override
-    public boolean isBuilderSupported() {
-        return false;
+    public void enable303() {
+// modelTemplateFiles.remove("model.mustache");
+// modelTemplateFiles.put("model303.mustache", ".java");
     }
-
-    @Override
-    public void enableBuilderSupport() { }
 
 }
