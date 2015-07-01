@@ -23,6 +23,8 @@
     </modules>
 
     <properties>
+        <java.source>1.7</java.source>
+        <java.target>1.7</java.target>
         <main.basedir>${basedir}</main.basedir>
         <argLine />
     </properties>
