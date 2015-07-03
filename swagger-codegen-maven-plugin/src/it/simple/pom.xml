@@ -17,6 +17,7 @@
                     <language>jaxrsinterfaces</language>
                     <apiPackage>de.zalando.api</apiPackage>
                     <modelPackage>de.zalando.model</modelPackage>
+                    <enableBuilderSupport>true</enableBuilderSupport>
                 </configuration>
                 <dependencies>
                     <dependency>
