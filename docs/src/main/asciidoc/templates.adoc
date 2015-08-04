@@ -203,6 +203,8 @@ public interface StoreApi {
 
 === springinterfacesResponseEntityNoSwaggerAnnotations
 
+You can guess again ...
+
 .generated code, with ResponseEntity without Swagger-Annotations
 ====
 [source, java]
