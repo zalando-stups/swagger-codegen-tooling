@@ -515,8 +515,9 @@ table.CodeRay td.code>pre{padding:0}
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Goal of this project is to provide tooling for Maven projects to generate code from swagger-definitions (yaml or json)
-during build.</p>
+<p>Goal of this project is to provide tooling for Maven projects (and maybe Gradle) to generate code from swagger-definitions (yaml or json)
+during build. This is not a onetime-generator. Code will be generated at every build to make sure your implementation
+matches your api.</p>
 </div>
 <div class="paragraph">
 <p>It also provides different templates for code-generation.</p>
@@ -530,29 +531,29 @@ during build.</p>
 <p>Installation with maven is easy. Just add the following snippet into your pom.xml:</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 1. plugin-configuration in pom.xml</div>
+<div class="title">Example 1. plugin configuration in pom.xml</div>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml">    <span class="tag">&lt;plugin&gt;</span>
-        <span class="tag">&lt;groupId&gt;</span>org.zalando.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
-        <span class="tag">&lt;artifactId&gt;</span>swagger-codegen-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
-        <span class="tag">&lt;version&gt;</span>${plugin.version}<span class="tag">&lt;/version&gt;</span>
-        <span class="tag">&lt;configuration&gt;</span>
-            <span class="tag">&lt;apiFile&gt;</span>${project.basedir}/src/main/resources/api.yaml<span class="tag">&lt;/apiFile&gt;</span>
-            <span class="tag">&lt;language&gt;</span>springinterfaces<span class="tag">&lt;/language&gt;</span>
-            <span class="tag">&lt;apiPackage&gt;</span>com.yourcompany.api<span class="tag">&lt;/apiPackage&gt;</span>
-            <span class="tag">&lt;modelPackage&gt;</span>com.yourcompany.model<span class="tag">&lt;/modelPackage&gt;</span>
-        <span class="tag">&lt;/configuration&gt;</span>
-        <span class="comment">&lt;!-- put template-dependency here, directly into plugin --&gt;</span>
-        <span class="tag">&lt;dependencies&gt;</span>
-            <span class="tag">&lt;dependency&gt;</span>
-                <span class="tag">&lt;groupId&gt;</span>org.zalando.stups<span class="tag">&lt;/groupId&gt;</span>
-                <span class="tag">&lt;artifactId&gt;</span>swagger-codegen-template-spring-interfaces<span class="tag">&lt;/artifactId&gt;</span>
-                <span class="tag">&lt;version&gt;</span>${template.version}<span class="tag">&lt;/version&gt;</span>
-            <span class="tag">&lt;/dependency&gt;</span>
-        <span class="tag">&lt;/dependencies&gt;</span>
-    <span class="tag">&lt;/plugin&gt;</span></code></pre>
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;plugin&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>org.zalando.maven.plugins<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>swagger-codegen-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span>${plugin.version}<span class="tag">&lt;/version&gt;</span>
+    <span class="tag">&lt;configuration&gt;</span>
+        <span class="tag">&lt;apiFile&gt;</span>${project.basedir}/src/main/resources/api.yaml<span class="tag">&lt;/apiFile&gt;</span>
+        <span class="tag">&lt;language&gt;</span>springinterfaces<span class="tag">&lt;/language&gt;</span>
+        <span class="tag">&lt;apiPackage&gt;</span>com.yourcompany.api<span class="tag">&lt;/apiPackage&gt;</span>
+        <span class="tag">&lt;modelPackage&gt;</span>com.yourcompany.model<span class="tag">&lt;/modelPackage&gt;</span>
+    <span class="tag">&lt;/configuration&gt;</span>
+    <span class="comment">&lt;!-- put template-dependency here, directly into plugin --&gt;</span>
+    <span class="tag">&lt;dependencies&gt;</span>
+        <span class="tag">&lt;dependency&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>org.zalando.stups<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>swagger-codegen-template-spring-interfaces<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;version&gt;</span>${template.version}<span class="tag">&lt;/version&gt;</span>
+        <span class="tag">&lt;/dependency&gt;</span>
+    <span class="tag">&lt;/dependencies&gt;</span>
+<span class="tag">&lt;/plugin&gt;</span></code></pre>
 </div>
 </div>
 </div>
