@@ -1,1 +1,5 @@
-TODO
+Goal of this project is to provide tooling for Maven projects to generate code from swagger-definitions (yaml or json)
+during build.
+
+It also provides different templates for code-generation.
+

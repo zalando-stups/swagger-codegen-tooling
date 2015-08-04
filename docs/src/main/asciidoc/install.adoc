@@ -1,1 +1,27 @@
-TODO
+Installation with maven is easy. Just add the following snippet into your pom.xml:
+
+.plugin-configuration in pom.xml
+====
+[source, xml]
+----
+    <plugin>
+        <groupId>org.zalando.maven.plugins</groupId>
+        <artifactId>swagger-codegen-maven-plugin</artifactId>
+        <version>${plugin.version}</version>
+        <configuration>
+            <apiFile>${project.basedir}/src/main/resources/api.yaml</apiFile>
+            <language>springinterfaces</language>
+            <apiPackage>com.yourcompany.api</apiPackage>
+            <modelPackage>com.yourcompany.model</modelPackage>
+        </configuration>
+        <!-- put template-dependency here, directly into plugin -->
+        <dependencies>
+            <dependency>
+                <groupId>org.zalando.stups</groupId>
+                <artifactId>swagger-codegen-template-spring-interfaces</artifactId>
+                <version>${template.version}</version>
+            </dependency>
+        </dependencies>
+    </plugin>
+----
+====
