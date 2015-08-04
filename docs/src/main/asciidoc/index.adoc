@@ -9,6 +9,6 @@ include::intro.adoc[]
 
 include::install.adoc[]
 
-== Whats inside
+== Templates
 
-TODO
+include::templates.adoc[]

@@ -1,0 +1,346 @@
+.Overview of existing templates
+[options = "header, autowidth"]
+|===============
+|templatename
+|`springinterfaces`
+|`springinterfacesNoSwaggerAnnotations`
+|`springinterfacesResponseEntity`
+|`springinterfacesResponseEntityNoSwaggerAnnotations`
+|`jaxrsinterfaces`
+|===============
+
+The following examples are generated from the official pet-store-example by swagger.
+
+=== springinterfaces
+
+When using `springinterfaces` as template then the generated code looks like this:
+
+.generated code
+====
+[source, java]
+----
+package de.zalando.swagger.api;
+
+import de.zalando.swagger.model.*;
+
+import io.swagger.annotations.*;
+
+import java.util.Map;
+import de.zalando.swagger.model.Order;
+
+import java.util.List;
+
+import java.io.InputStream;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+
+//
+// GENERATED CLASS, DO NOT EDIT
+//
+
+@Api(value = "/store")
+public interface StoreApi {
+
+  @RequestMapping(value="/store/inventory",method=RequestMethod.GET , produces={ "application/json", "application/xml" })
+  @ApiOperation(value = "Returns pet inventories by status", notes = "Returns a map of status codes to quantities", response = Map.class, responseContainer = "map")
+  @ApiResponses(value = { 
+    @ApiResponse(code = 200, message = "successful operation")
+  })
+  Integer getInventory();
+
+  @RequestMapping(value="/store/order",method=RequestMethod.POST , produces={ "application/json", "application/xml" })
+  @ApiOperation(value = "Place an order for a pet", notes = "", response = Order.class)
+  @ApiResponses(value = { 
+    @ApiResponse(code = 200, message = "successful operation"),
+    @ApiResponse(code = 400, message = "Invalid Order")
+  })
+  Order placeOrder(@ApiParam(value = "order placed for purchasing the pet"  ) @RequestBody Order body);
+
+  @RequestMapping(value="/store/order/{orderId}",method=RequestMethod.GET , produces={ "application/json", "application/xml" })
+  @ApiOperation(value = "Find purchase order by ID", notes = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", response = Order.class)
+  @ApiResponses(value = { 
+    @ApiResponse(code = 404, message = "Order not found"),
+    @ApiResponse(code = 200, message = "successful operation"),
+    @ApiResponse(code = 400, message = "Invalid ID supplied")
+  })
+  Order getOrderById(@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") String orderId);
+
+  @RequestMapping(value="/store/order/{orderId}",method=RequestMethod.DELETE , produces={ "application/json", "application/xml" })
+  @ApiOperation(value = "Delete purchase order by ID", notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors")
+  @ApiResponses(value = { 
+    @ApiResponse(code = 404, message = "Order not found"),
+    @ApiResponse(code = 400, message = "Invalid ID supplied")
+  })
+  void deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("orderId") String orderId);
+
+}
+----
+====
+
+=== springinterfacesNoSwaggerAnnotations
+
+You can guess by the templates name what the code will look like, right?
+
+.generated code, no swagger-annotations
+====
+[source, java]
+----
+package de.zalando.swagger.api;
+
+import de.zalando.swagger.model.*;
+
+import java.util.Map;
+import de.zalando.swagger.model.Order;
+
+import java.util.List;
+
+import java.io.InputStream;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+
+//
+// GENERATED CLASS, DO NOT EDIT
+//
+
+public interface StoreApi {
+
+  @RequestMapping(value="/store/inventory",method=RequestMethod.GET , produces={ "application/json", "application/xml" })
+  Integer getInventory();
+
+  @RequestMapping(value="/store/order",method=RequestMethod.POST , produces={ "application/json", "application/xml" })
+  Order placeOrder( @RequestBody Order body);
+
+  @RequestMapping(value="/store/order/{orderId}",method=RequestMethod.GET , produces={ "application/json", "application/xml" })
+  Order getOrderById( @PathVariable("orderId") String orderId);
+
+  @RequestMapping(value="/store/order/{orderId}",method=RequestMethod.DELETE , produces={ "application/json", "application/xml" })
+  void deleteOrder( @PathVariable("orderId") String orderId);
+
+}
+----
+====
+
+=== springinterfacesResponseEntity
+
+If you like to use Springs ResponseEntity as return-value.
+
+.generated code, with ResponseEntity and Swagger-Annotations
+====
+[source, java]
+----
+package de.zalando.swagger.api;
+
+import de.zalando.swagger.model.*;
+
+import io.swagger.annotations.*;
+
+import java.util.Map;
+import de.zalando.swagger.model.Order;
+
+import java.util.List;
+
+import java.io.InputStream;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+
+//
+// GENERATED CLASS, DO NOT EDIT
+//
+
+@Api(value = "/store")
+public interface StoreApi {
+
+  @RequestMapping(value="/store/inventory",method=RequestMethod.GET , produces={ "application/json", "application/xml" })
+  @ApiOperation(value = "Returns pet inventories by status", notes = "Returns a map of status codes to quantities", response = Map.class, responseContainer = "map")
+  @ApiResponses(value = { 
+    @ApiResponse(code = 200, message = "successful operation")
+  })
+  ResponseEntity<Integer> getInventory();
+
+  @RequestMapping(value="/store/order",method=RequestMethod.POST , produces={ "application/json", "application/xml" })
+  @ApiOperation(value = "Place an order for a pet", notes = "", response = Order.class)
+  @ApiResponses(value = { 
+    @ApiResponse(code = 200, message = "successful operation"),
+    @ApiResponse(code = 400, message = "Invalid Order")
+  })
+  ResponseEntity<Order> placeOrder(@ApiParam(value = "order placed for purchasing the pet"  ) @RequestBody Order body);
+
+  @RequestMapping(value="/store/order/{orderId}",method=RequestMethod.GET , produces={ "application/json", "application/xml" })
+  @ApiOperation(value = "Find purchase order by ID", notes = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", response = Order.class)
+  @ApiResponses(value = { 
+    @ApiResponse(code = 404, message = "Order not found"),
+    @ApiResponse(code = 200, message = "successful operation"),
+    @ApiResponse(code = 400, message = "Invalid ID supplied")
+  })
+  ResponseEntity<Order> getOrderById(@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathVariable("orderId") String orderId);
+
+  @RequestMapping(value="/store/order/{orderId}",method=RequestMethod.DELETE , produces={ "application/json", "application/xml" })
+  @ApiOperation(value = "Delete purchase order by ID", notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors")
+  @ApiResponses(value = { 
+    @ApiResponse(code = 404, message = "Order not found"),
+    @ApiResponse(code = 400, message = "Invalid ID supplied")
+  })
+  void deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathVariable("orderId") String orderId);
+
+}
+----
+====
+
+=== springinterfacesResponseEntityNoSwaggerAnnotations
+
+.generated code, with ResponseEntity without Swagger-Annotations
+====
+[source, java]
+----
+package de.zalando.swagger.api;
+
+import de.zalando.swagger.model.*;
+
+import java.util.Map;
+import de.zalando.swagger.model.Order;
+
+import java.util.List;
+
+import java.io.InputStream;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+
+//
+// GENERATED CLASS, DO NOT EDIT
+//
+
+public interface StoreApi {
+
+  @RequestMapping(value="/store/inventory",method=RequestMethod.GET , produces={ "application/json", "application/xml" })
+  ResponseEntity<Integer> getInventory();
+
+  @RequestMapping(value="/store/order",method=RequestMethod.POST , produces={ "application/json", "application/xml" })
+  ResponseEntity<Order> placeOrder( @RequestBody Order body);
+
+  @RequestMapping(value="/store/order/{orderId}",method=RequestMethod.GET , produces={ "application/json", "application/xml" })
+  ResponseEntity<Order> getOrderById( @PathVariable("orderId") String orderId);
+
+  @RequestMapping(value="/store/order/{orderId}",method=RequestMethod.DELETE , produces={ "application/json", "application/xml" })
+  void deleteOrder( @PathVariable("orderId") String orderId);
+
+}
+
+----
+====
+
+=== jaxrsinterfaces
+
+There exist also an template for JAX-RS.
+
+.generated code for JAX-RS
+====
+[source, java]
+----
+package de.zalando.swagger.api;
+
+import de.zalando.swagger.model.*;
+
+import io.swagger.annotations.*;
+
+import java.util.Map;
+import de.zalando.swagger.model.Order;
+
+import java.util.List;
+import de.zalando.swagger.api.NotFoundException;
+
+import java.io.InputStream;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
+import javax.ws.rs.core.Response;
+import javax.ws.rs.*;
+
+@Path("/store")
+@Api(value = "/store", description = "the store API")
+public interface StoreApi {
+  
+  @GET
+  @Path("/inventory")
+  
+  @Produces({ "application/json", "application/xml" })
+  // Integer
+  @ApiOperation(value = "Returns pet inventories by status", notes = "Returns a map of status codes to quantities", response = Integer.class, responseContainer = "map")
+  @ApiResponses(value = { 
+    @ApiResponse(code = 200, message = "successful operation") })
+
+  public Response getInventory()
+      throws NotFoundException;
+
+  
+  @POST
+  @Path("/order")
+  
+  @Produces({ "application/json", "application/xml" })
+  // Order
+  @ApiOperation(value = "Place an order for a pet", notes = "", response = Order.class)
+  @ApiResponses(value = { 
+    @ApiResponse(code = 200, message = "successful operation"),
+    
+    @ApiResponse(code = 400, message = "Invalid Order") })
+
+  public Response placeOrder(@ApiParam(value = "order placed for purchasing the pet"  ) Order body)
+      throws NotFoundException;
+
+  
+  @GET
+  @Path("/order/{orderId}")
+  
+  @Produces({ "application/json", "application/xml" })
+  // Order
+  @ApiOperation(value = "Find purchase order by ID", notes = "For valid response try integer IDs with value <= 5 or > 10. Other values will generated exceptions", response = Order.class)
+  @ApiResponses(value = { 
+    @ApiResponse(code = 404, message = "Order not found"),
+    
+    @ApiResponse(code = 200, message = "successful operation"),
+    
+    @ApiResponse(code = 400, message = "Invalid ID supplied") })
+
+  public Response getOrderById(@ApiParam(value = "ID of pet that needs to be fetched",required=true ) @PathParam("orderId") String orderId)
+      throws NotFoundException;
+
+  
+  @DELETE
+  @Path("/order/{orderId}")
+  
+  @Produces({ "application/json", "application/xml" })
+  // Void
+  @ApiOperation(value = "Delete purchase order by ID", notes = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors", response = Void.class)
+  @ApiResponses(value = { 
+    @ApiResponse(code = 404, message = "Order not found"),
+    
+    @ApiResponse(code = 400, message = "Invalid ID supplied") })
+
+  public Response deleteOrder(@ApiParam(value = "ID of the order that needs to be deleted",required=true ) @PathParam("orderId") String orderId)
+      throws NotFoundException;
+
+  
+}
+----
+====
+
