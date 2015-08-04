@@ -1,0 +1,45 @@
+There are some more configuration-options for the maven-plugin.
+
+.plugin configuration in pom.xml
+====
+[source, xml]
+----
+<plugin>
+    ... skipped ...
+    <configuration>
+        <apiFile>${project.basedir}/src/main/resources/api.yaml</apiFile>
+        <language>springinterfaces</language>
+        <apiPackage>com.yourcompany.api</apiPackage>
+        <modelPackage>com.yourcompany.model</modelPackage>
+        <!-- skip generation for api -->
+        <skipApigeneration>true</skipApigeneration>
+        <!-- model-definitions to exclude from generation -->
+        <excludedModels>
+            <excludedModel>Application</excludedModel>
+            <excludedModel>ApplicationDetails</excludedModel>
+        </excludedModels>
+        <!-- skip generation of model-definitions completely -->
+        <skipModelgeneration>true</skipModelgeneration>
+        <yamlToJson>true</yamlToJson>
+        <yamlToJsonOutputDirectory>${project.build.directory}/classes</yamlToJsonOutputDirectory>
+        <enableBuilderSupport>true</enableBuilderSupport>
+        <enable303>true</enable303>
+    </configuration>
+    <!-- put template-dependency here, directly into plugin -->
+    ... skipped ...
+</plugin>
+----
+====
+
+.Overview of configuration options
+[options = "header, autowidth"]
+|===============
+|option | description
+|`yamlToJson` | transform the yaml into json
+|`yamlToJsonOutputDirectory` | location for generated json-file
+|`enableBuilderSupport` | creates simple builder for model-definitions
+|`enable303` | add JSR-303 annotations if possible to model-definitions
+|`excludedModels` | Models to exclude from generation
+|`skipModelgeneration` | completely skips generation of model-definitions
+|`skipApigeneration` | maybe you only want to generate the model, because api is shared by another module
+|===============

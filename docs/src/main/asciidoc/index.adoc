@@ -12,3 +12,7 @@ include::install.adoc[]
 == Templates
 
 include::templates.adoc[]
+
+== Further Configuration Options
+
+include::configuration.adoc[]
