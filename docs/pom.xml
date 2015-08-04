@@ -125,7 +125,9 @@
                         </executions>
                     </plugin>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-scm-publish-plugin</artifactId>
+                        <version>1.1</version>
                         <configuration>
                             <serverId>zal-stups-swagger-codegen-tooling</serverId>
                             <pubScmUrl>scm:git:https://github.com/zalando-stups/swagger-codegen-tooling.git</pubScmUrl>
@@ -135,14 +137,6 @@
                             <siteOutputEncoding>UTF-8</siteOutputEncoding>
                             <tryUpdate>true</tryUpdate>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>publish-scm</goal>
-                                </goals>
-                                <phase>site</phase>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
