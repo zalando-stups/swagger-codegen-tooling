@@ -508,7 +508,7 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel1">
 <li><a href="#_installation">Installation</a></li>
 <li><a href="#_templates">Templates</a>
-<ul class="sectlevel3">
+<ul class="sectlevel2">
 <li><a href="#_springinterfaces">springinterfaces</a></li>
 <li><a href="#_springinterfacesnoswaggerannotations">springinterfacesNoSwaggerAnnotations</a></li>
 <li><a href="#_springinterfacesresponseentity">springinterfacesResponseEntity</a></li>
@@ -597,39 +597,360 @@ matches your api.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jaxrsinterfaces</code></p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TODO</p></td>
-</tr>
 </tbody>
 </table>
-<div class="sect3">
-<h4 id="_springinterfaces">springinterfaces</h4>
 <div class="paragraph">
-<p>TODO</p>
+<p>The following examples are generated from the official pet-store-example by swagger.</p>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_springinterfacesnoswaggerannotations">springinterfacesNoSwaggerAnnotations</h4>
+<div class="sect2">
+<h3 id="_springinterfaces">springinterfaces</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>When using <code>springinterfaces</code> as template then the generated code looks like this:</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 2. generated code</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">de.zalando.swagger.api</span>;
+
+<span class="keyword">import</span> <span class="include">de.zalando.swagger.model</span>.*;
+
+<span class="keyword">import</span> <span class="include">io.swagger.annotations</span>.*;
+
+<span class="keyword">import</span> <span class="include">java.util.Map</span>;
+<span class="keyword">import</span> <span class="include">de.zalando.swagger.model.Order</span>;
+
+<span class="keyword">import</span> <span class="include">java.util.List</span>;
+
+<span class="keyword">import</span> <span class="include">java.io.InputStream</span>;
+
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.ModelAttribute</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.PathVariable</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestMapping</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestMethod</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestParam</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestBody</span>;
+
+<span class="comment">//</span>
+<span class="comment">// GENERATED CLASS, DO NOT EDIT</span>
+<span class="comment">//</span>
+
+<span class="annotation">@Api</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">/store</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">interface</span> <span class="class">StoreApi</span> {
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/inventory</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.GET , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="annotation">@ApiOperation</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">Returns pet inventories by status</span><span class="delimiter">&quot;</span></span>, notes = <span class="string"><span class="delimiter">&quot;</span><span class="content">Returns a map of status codes to quantities</span><span class="delimiter">&quot;</span></span>, response = <span class="predefined-type">Map</span>.class, responseContainer = <span class="string"><span class="delimiter">&quot;</span><span class="content">map</span><span class="delimiter">&quot;</span></span>)
+  <span class="annotation">@ApiResponses</span>(value = {
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">200</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">successful operation</span><span class="delimiter">&quot;</span></span>)
+  })
+  <span class="predefined-type">Integer</span> getInventory();
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/order</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.POST , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="annotation">@ApiOperation</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">Place an order for a pet</span><span class="delimiter">&quot;</span></span>, notes = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>, response = Order.class)
+  <span class="annotation">@ApiResponses</span>(value = {
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">200</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">successful operation</span><span class="delimiter">&quot;</span></span>),
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">400</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Invalid Order</span><span class="delimiter">&quot;</span></span>)
+  })
+  Order placeOrder(<span class="annotation">@ApiParam</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">order placed for purchasing the pet</span><span class="delimiter">&quot;</span></span>  ) <span class="annotation">@RequestBody</span> Order body);
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/order/{orderId}</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.GET , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="annotation">@ApiOperation</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">Find purchase order by ID</span><span class="delimiter">&quot;</span></span>, notes = <span class="string"><span class="delimiter">&quot;</span><span class="content">For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions</span><span class="delimiter">&quot;</span></span>, response = Order.class)
+  <span class="annotation">@ApiResponses</span>(value = {
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">404</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Order not found</span><span class="delimiter">&quot;</span></span>),
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">200</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">successful operation</span><span class="delimiter">&quot;</span></span>),
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">400</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Invalid ID supplied</span><span class="delimiter">&quot;</span></span>)
+  })
+  Order getOrderById(<span class="annotation">@ApiParam</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">ID of pet that needs to be fetched</span><span class="delimiter">&quot;</span></span>,required=<span class="predefined-constant">true</span> ) <span class="annotation">@PathVariable</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">orderId</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> orderId);
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/order/{orderId}</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.DELETE , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="annotation">@ApiOperation</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">Delete purchase order by ID</span><span class="delimiter">&quot;</span></span>, notes = <span class="string"><span class="delimiter">&quot;</span><span class="content">For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors</span><span class="delimiter">&quot;</span></span>)
+  <span class="annotation">@ApiResponses</span>(value = {
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">404</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Order not found</span><span class="delimiter">&quot;</span></span>),
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">400</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Invalid ID supplied</span><span class="delimiter">&quot;</span></span>)
+  })
+  <span class="type">void</span> deleteOrder(<span class="annotation">@ApiParam</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">ID of the order that needs to be deleted</span><span class="delimiter">&quot;</span></span>,required=<span class="predefined-constant">true</span> ) <span class="annotation">@PathVariable</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">orderId</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> orderId);
+
+}</code></pre>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_springinterfacesresponseentity">springinterfacesResponseEntity</h4>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_springinterfacesnoswaggerannotations">springinterfacesNoSwaggerAnnotations</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>You can guess by the templates name what the code will look like, right?</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 3. generated code, no swagger-annotations</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">de.zalando.swagger.api</span>;
+
+<span class="keyword">import</span> <span class="include">de.zalando.swagger.model</span>.*;
+
+<span class="keyword">import</span> <span class="include">java.util.Map</span>;
+<span class="keyword">import</span> <span class="include">de.zalando.swagger.model.Order</span>;
+
+<span class="keyword">import</span> <span class="include">java.util.List</span>;
+
+<span class="keyword">import</span> <span class="include">java.io.InputStream</span>;
+
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.ModelAttribute</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.PathVariable</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestMapping</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestMethod</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestParam</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestBody</span>;
+
+<span class="comment">//</span>
+<span class="comment">// GENERATED CLASS, DO NOT EDIT</span>
+<span class="comment">//</span>
+
+<span class="directive">public</span> <span class="type">interface</span> <span class="class">StoreApi</span> {
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/inventory</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.GET , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="predefined-type">Integer</span> getInventory();
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/order</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.POST , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  Order placeOrder( <span class="annotation">@RequestBody</span> Order body);
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/order/{orderId}</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.GET , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  Order getOrderById( <span class="annotation">@PathVariable</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">orderId</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> orderId);
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/order/{orderId}</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.DELETE , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="type">void</span> deleteOrder( <span class="annotation">@PathVariable</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">orderId</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> orderId);
+
+}</code></pre>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_springinterfacesresponseentitynoswaggerannotations">springinterfacesResponseEntityNoSwaggerAnnotations</h4>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_springinterfacesresponseentity">springinterfacesResponseEntity</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>If you like to use Springs ResponseEntity as return-value.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 4. generated code, with ResponseEntity and Swagger-Annotations</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">de.zalando.swagger.api</span>;
+
+<span class="keyword">import</span> <span class="include">de.zalando.swagger.model</span>.*;
+
+<span class="keyword">import</span> <span class="include">io.swagger.annotations</span>.*;
+
+<span class="keyword">import</span> <span class="include">java.util.Map</span>;
+<span class="keyword">import</span> <span class="include">de.zalando.swagger.model.Order</span>;
+
+<span class="keyword">import</span> <span class="include">java.util.List</span>;
+
+<span class="keyword">import</span> <span class="include">java.io.InputStream</span>;
+
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.ModelAttribute</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.PathVariable</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestMapping</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestMethod</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestParam</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestBody</span>;
+
+<span class="comment">//</span>
+<span class="comment">// GENERATED CLASS, DO NOT EDIT</span>
+<span class="comment">//</span>
+
+<span class="annotation">@Api</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">/store</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">interface</span> <span class="class">StoreApi</span> {
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/inventory</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.GET , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="annotation">@ApiOperation</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">Returns pet inventories by status</span><span class="delimiter">&quot;</span></span>, notes = <span class="string"><span class="delimiter">&quot;</span><span class="content">Returns a map of status codes to quantities</span><span class="delimiter">&quot;</span></span>, response = <span class="predefined-type">Map</span>.class, responseContainer = <span class="string"><span class="delimiter">&quot;</span><span class="content">map</span><span class="delimiter">&quot;</span></span>)
+  <span class="annotation">@ApiResponses</span>(value = {
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">200</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">successful operation</span><span class="delimiter">&quot;</span></span>)
+  })
+  ResponseEntity&lt;<span class="predefined-type">Integer</span>&gt; getInventory();
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/order</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.POST , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="annotation">@ApiOperation</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">Place an order for a pet</span><span class="delimiter">&quot;</span></span>, notes = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>, response = Order.class)
+  <span class="annotation">@ApiResponses</span>(value = {
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">200</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">successful operation</span><span class="delimiter">&quot;</span></span>),
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">400</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Invalid Order</span><span class="delimiter">&quot;</span></span>)
+  })
+  ResponseEntity&lt;Order&gt; placeOrder(<span class="annotation">@ApiParam</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">order placed for purchasing the pet</span><span class="delimiter">&quot;</span></span>  ) <span class="annotation">@RequestBody</span> Order body);
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/order/{orderId}</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.GET , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="annotation">@ApiOperation</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">Find purchase order by ID</span><span class="delimiter">&quot;</span></span>, notes = <span class="string"><span class="delimiter">&quot;</span><span class="content">For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions</span><span class="delimiter">&quot;</span></span>, response = Order.class)
+  <span class="annotation">@ApiResponses</span>(value = {
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">404</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Order not found</span><span class="delimiter">&quot;</span></span>),
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">200</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">successful operation</span><span class="delimiter">&quot;</span></span>),
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">400</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Invalid ID supplied</span><span class="delimiter">&quot;</span></span>)
+  })
+  ResponseEntity&lt;Order&gt; getOrderById(<span class="annotation">@ApiParam</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">ID of pet that needs to be fetched</span><span class="delimiter">&quot;</span></span>,required=<span class="predefined-constant">true</span> ) <span class="annotation">@PathVariable</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">orderId</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> orderId);
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/order/{orderId}</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.DELETE , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="annotation">@ApiOperation</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">Delete purchase order by ID</span><span class="delimiter">&quot;</span></span>, notes = <span class="string"><span class="delimiter">&quot;</span><span class="content">For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors</span><span class="delimiter">&quot;</span></span>)
+  <span class="annotation">@ApiResponses</span>(value = {
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">404</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Order not found</span><span class="delimiter">&quot;</span></span>),
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">400</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Invalid ID supplied</span><span class="delimiter">&quot;</span></span>)
+  })
+  <span class="type">void</span> deleteOrder(<span class="annotation">@ApiParam</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">ID of the order that needs to be deleted</span><span class="delimiter">&quot;</span></span>,required=<span class="predefined-constant">true</span> ) <span class="annotation">@PathVariable</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">orderId</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> orderId);
+
+}</code></pre>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_jaxrsinterfaces">jaxrsinterfaces</h4>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_springinterfacesresponseentitynoswaggerannotations">springinterfacesResponseEntityNoSwaggerAnnotations</h3>
+<div class="exampleblock">
+<div class="title">Example 5. generated code, with ResponseEntity without Swagger-Annotations</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">de.zalando.swagger.api</span>;
+
+<span class="keyword">import</span> <span class="include">de.zalando.swagger.model</span>.*;
+
+<span class="keyword">import</span> <span class="include">java.util.Map</span>;
+<span class="keyword">import</span> <span class="include">de.zalando.swagger.model.Order</span>;
+
+<span class="keyword">import</span> <span class="include">java.util.List</span>;
+
+<span class="keyword">import</span> <span class="include">java.io.InputStream</span>;
+
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.ModelAttribute</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.PathVariable</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestMapping</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestMethod</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestParam</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.web.bind.annotation.RequestBody</span>;
+
+<span class="comment">//</span>
+<span class="comment">// GENERATED CLASS, DO NOT EDIT</span>
+<span class="comment">//</span>
+
+<span class="directive">public</span> <span class="type">interface</span> <span class="class">StoreApi</span> {
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/inventory</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.GET , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  ResponseEntity&lt;<span class="predefined-type">Integer</span>&gt; getInventory();
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/order</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.POST , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  ResponseEntity&lt;Order&gt; placeOrder( <span class="annotation">@RequestBody</span> Order body);
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/order/{orderId}</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.GET , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  ResponseEntity&lt;Order&gt; getOrderById( <span class="annotation">@PathVariable</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">orderId</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> orderId);
+
+  <span class="annotation">@RequestMapping</span>(value=<span class="string"><span class="delimiter">&quot;</span><span class="content">/store/order/{orderId}</span><span class="delimiter">&quot;</span></span>,method=RequestMethod.DELETE , produces={ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="type">void</span> deleteOrder( <span class="annotation">@PathVariable</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">orderId</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> orderId);
+
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_jaxrsinterfaces">jaxrsinterfaces</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>There exist also an template for JAX-RS.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 6. generated code for JAX-RS</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">de.zalando.swagger.api</span>;
+
+<span class="keyword">import</span> <span class="include">de.zalando.swagger.model</span>.*;
+
+<span class="keyword">import</span> <span class="include">io.swagger.annotations</span>.*;
+
+<span class="keyword">import</span> <span class="include">java.util.Map</span>;
+<span class="keyword">import</span> <span class="include">de.zalando.swagger.model.Order</span>;
+
+<span class="keyword">import</span> <span class="include">java.util.List</span>;
+<span class="keyword">import</span> <span class="include">de.zalando.swagger.api.NotFoundException</span>;
+
+<span class="keyword">import</span> <span class="include">java.io.InputStream</span>;
+
+<span class="keyword">import</span> <span class="include">org.glassfish.jersey.media.multipart.FormDataContentDisposition</span>;
+<span class="keyword">import</span> <span class="include">org.glassfish.jersey.media.multipart.FormDataParam</span>;
+
+<span class="keyword">import</span> <span class="include">javax.ws.rs.core.Response</span>;
+<span class="keyword">import</span> <span class="include">javax.ws.rs</span>.*;
+
+<span class="annotation">@Path</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">/store</span><span class="delimiter">&quot;</span></span>)
+<span class="annotation">@Api</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">/store</span><span class="delimiter">&quot;</span></span>, description = <span class="string"><span class="delimiter">&quot;</span><span class="content">the store API</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">interface</span> <span class="class">StoreApi</span> {
+
+  <span class="annotation">@GET</span>
+  <span class="annotation">@Path</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">/inventory</span><span class="delimiter">&quot;</span></span>)
+
+  <span class="annotation">@Produces</span>({ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="comment">// Integer</span>
+  <span class="annotation">@ApiOperation</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">Returns pet inventories by status</span><span class="delimiter">&quot;</span></span>, notes = <span class="string"><span class="delimiter">&quot;</span><span class="content">Returns a map of status codes to quantities</span><span class="delimiter">&quot;</span></span>, response = <span class="predefined-type">Integer</span>.class, responseContainer = <span class="string"><span class="delimiter">&quot;</span><span class="content">map</span><span class="delimiter">&quot;</span></span>)
+  <span class="annotation">@ApiResponses</span>(value = {
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">200</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">successful operation</span><span class="delimiter">&quot;</span></span>) })
+
+  <span class="directive">public</span> Response getInventory()
+      <span class="directive">throws</span> NotFoundException;
+
+
+  <span class="annotation">@POST</span>
+  <span class="annotation">@Path</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">/order</span><span class="delimiter">&quot;</span></span>)
+
+  <span class="annotation">@Produces</span>({ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="comment">// Order</span>
+  <span class="annotation">@ApiOperation</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">Place an order for a pet</span><span class="delimiter">&quot;</span></span>, notes = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>, response = Order.class)
+  <span class="annotation">@ApiResponses</span>(value = {
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">200</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">successful operation</span><span class="delimiter">&quot;</span></span>),
+
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">400</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Invalid Order</span><span class="delimiter">&quot;</span></span>) })
+
+  <span class="directive">public</span> Response placeOrder(<span class="annotation">@ApiParam</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">order placed for purchasing the pet</span><span class="delimiter">&quot;</span></span>  ) Order body)
+      <span class="directive">throws</span> NotFoundException;
+
+
+  <span class="annotation">@GET</span>
+  <span class="annotation">@Path</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">/order/{orderId}</span><span class="delimiter">&quot;</span></span>)
+
+  <span class="annotation">@Produces</span>({ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="comment">// Order</span>
+  <span class="annotation">@ApiOperation</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">Find purchase order by ID</span><span class="delimiter">&quot;</span></span>, notes = <span class="string"><span class="delimiter">&quot;</span><span class="content">For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions</span><span class="delimiter">&quot;</span></span>, response = Order.class)
+  <span class="annotation">@ApiResponses</span>(value = {
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">404</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Order not found</span><span class="delimiter">&quot;</span></span>),
+
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">200</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">successful operation</span><span class="delimiter">&quot;</span></span>),
+
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">400</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Invalid ID supplied</span><span class="delimiter">&quot;</span></span>) })
+
+  <span class="directive">public</span> Response getOrderById(<span class="annotation">@ApiParam</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">ID of pet that needs to be fetched</span><span class="delimiter">&quot;</span></span>,required=<span class="predefined-constant">true</span> ) <span class="annotation">@PathParam</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">orderId</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> orderId)
+      <span class="directive">throws</span> NotFoundException;
+
+
+  <span class="annotation">@DELETE</span>
+  <span class="annotation">@Path</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">/order/{orderId}</span><span class="delimiter">&quot;</span></span>)
+
+  <span class="annotation">@Produces</span>({ <span class="string"><span class="delimiter">&quot;</span><span class="content">application/json</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">application/xml</span><span class="delimiter">&quot;</span></span> })
+  <span class="comment">// Void</span>
+  <span class="annotation">@ApiOperation</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">Delete purchase order by ID</span><span class="delimiter">&quot;</span></span>, notes = <span class="string"><span class="delimiter">&quot;</span><span class="content">For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors</span><span class="delimiter">&quot;</span></span>, response = <span class="predefined-type">Void</span>.class)
+  <span class="annotation">@ApiResponses</span>(value = {
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">404</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Order not found</span><span class="delimiter">&quot;</span></span>),
+
+    <span class="annotation">@ApiResponse</span>(code = <span class="integer">400</span>, message = <span class="string"><span class="delimiter">&quot;</span><span class="content">Invalid ID supplied</span><span class="delimiter">&quot;</span></span>) })
+
+  <span class="directive">public</span> Response deleteOrder(<span class="annotation">@ApiParam</span>(value = <span class="string"><span class="delimiter">&quot;</span><span class="content">ID of the order that needs to be deleted</span><span class="delimiter">&quot;</span></span>,required=<span class="predefined-constant">true</span> ) <span class="annotation">@PathParam</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">orderId</span><span class="delimiter">&quot;</span></span>) <span class="predefined-type">String</span> orderId)
+      <span class="directive">throws</span> NotFoundException;
+
+
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
