@@ -516,6 +516,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_jaxrsinterfaces">jaxrsinterfaces</a></li>
 </ul>
 </li>
+<li><a href="#_further_configuration_options">Further Configuration Options</a></li>
 </ul>
 </div>
 </div>
@@ -955,10 +956,94 @@ matches your api.</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_further_configuration_options">Further Configuration Options</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are some more configuration-options for the maven-plugin.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 7. plugin configuration in pom.xml</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;plugin&gt;</span>
+    ... skipped ...
+    <span class="tag">&lt;configuration&gt;</span>
+        <span class="tag">&lt;apiFile&gt;</span>${project.basedir}/src/main/resources/api.yaml<span class="tag">&lt;/apiFile&gt;</span>
+        <span class="tag">&lt;language&gt;</span>springinterfaces<span class="tag">&lt;/language&gt;</span>
+        <span class="tag">&lt;apiPackage&gt;</span>com.yourcompany.api<span class="tag">&lt;/apiPackage&gt;</span>
+        <span class="tag">&lt;modelPackage&gt;</span>com.yourcompany.model<span class="tag">&lt;/modelPackage&gt;</span>
+        <span class="comment">&lt;!-- skip generation for api --&gt;</span>
+        <span class="tag">&lt;skipApigeneration&gt;</span>true<span class="tag">&lt;/skipApigeneration&gt;</span>
+        <span class="comment">&lt;!-- model-definitions to exclude from generation --&gt;</span>
+        <span class="tag">&lt;excludedModels&gt;</span>
+            <span class="tag">&lt;excludedModel&gt;</span>Application<span class="tag">&lt;/excludedModel&gt;</span>
+            <span class="tag">&lt;excludedModel&gt;</span>ApplicationDetails<span class="tag">&lt;/excludedModel&gt;</span>
+        <span class="tag">&lt;/excludedModels&gt;</span>
+        <span class="comment">&lt;!-- skip generation of model-definitions completely --&gt;</span>
+        <span class="tag">&lt;skipModelgeneration&gt;</span>true<span class="tag">&lt;/skipModelgeneration&gt;</span>
+        <span class="tag">&lt;yamlToJson&gt;</span>true<span class="tag">&lt;/yamlToJson&gt;</span>
+        <span class="tag">&lt;yamlToJsonOutputDirectory&gt;</span>${project.build.directory}/classes<span class="tag">&lt;/yamlToJsonOutputDirectory&gt;</span>
+        <span class="tag">&lt;enableBuilderSupport&gt;</span>true<span class="tag">&lt;/enableBuilderSupport&gt;</span>
+        <span class="tag">&lt;enable303&gt;</span>true<span class="tag">&lt;/enable303&gt;</span>
+    <span class="tag">&lt;/configuration&gt;</span>
+    <span class="comment">&lt;!-- put template-dependency here, directly into plugin --&gt;</span>
+    ... skipped ...
+<span class="tag">&lt;/plugin&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<table class="tableblock frame-all grid-all">
+<caption class="title">Table 2. Overview of configuration options</caption>
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">option</th>
+<th class="tableblock halign-left valign-top">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>yamlToJson</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">transform the yaml into json</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>yamlToJsonOutputDirectory</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">location for generated json-file</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>enableBuilderSupport</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">creates simple builder for model-definitions</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>enable303</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add JSR-303 annotations if possible to model-definitions</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>excludedModels</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Models to exclude from generation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>skipModelgeneration</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">completely skips generation of model-definitions</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>skipApigeneration</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maybe you only want to generate the model, because api is shared by another module</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-08-04 16:08:59 CEST
+Last updated 2015-08-04 16:52:43 CEST
 </div>
 </div>
 </body>
