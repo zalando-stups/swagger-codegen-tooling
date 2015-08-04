@@ -40,6 +40,40 @@ public class SpringInterfacesGeneratorTest {
     }
 
     @Test
+    public void testGenerationFromJsonNoAnnotations() throws CodegenerationException {
+        StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFile(getApiJsonFile())
+                                                                   .forLanguage("springinterfacesNoSwaggerAnnotations")
+                                                                   .withApiPackage("de.zalando.swagger.api")
+                                                                   .withModelPackage("de.zalando.swagger.model")
+                                                                   .writeResultsTo(generateOutputDir()).build();
+
+        generator.generate();
+    }
+
+    @Test
+    public void testGenerationFromJsonResponseEntity() throws CodegenerationException {
+        StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFile(getApiJsonFile())
+                                                                   .forLanguage("springinterfacesResponseEntity")
+                                                                   .withApiPackage("de.zalando.swagger.api")
+                                                                   .withModelPackage("de.zalando.swagger.model")
+                                                                   .writeResultsTo(generateOutputDir()).build();
+
+        generator.generate();
+    }
+
+    @Test
+    public void testGenerationFromJsonResponseEntityNoAnnotations() throws CodegenerationException {
+        StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFile(getApiJsonFile())
+                                                                   .forLanguage(
+                                                                       "springinterfacesResponseEntityNoSwaggerAnnotations")
+                                                                   .withApiPackage("de.zalando.swagger.api")
+                                                                   .withModelPackage("de.zalando.swagger.model")
+                                                                   .writeResultsTo(generateOutputDir()).build();
+
+        generator.generate();
+    }
+
+    @Test
     public void testGenerationFromJsonWithBuilder() throws CodegenerationException {
         StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFile(getApiJsonFile())
                                                                    .forLanguage("springinterfaces")
