@@ -59,7 +59,7 @@ public class PetApiImpl implements PetApi {
     }
 
     @Override
-    public Response deletePet(final String api_key, final Long petId) throws NotFoundException {
+    public Response deletePet(final Long petId, final String apiKey) throws NotFoundException {
 
         // TODO Auto-generated method stub
         return null;
