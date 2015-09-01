@@ -29,6 +29,7 @@ import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.ClientOpts;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.DefaultGenerator;
+import io.swagger.codegen.languages.CodeGenStatus;
 
 import io.swagger.models.Model;
 import io.swagger.models.Path;
@@ -149,7 +150,13 @@ public class StandaloneCodegenerator {
 
         try {
             clientOptInput.opts(clientOpts).swagger(swagger);
-            new DefaultGenerator().opts(clientOptInput).generate();
+
+            DefaultGenerator generator = (DefaultGenerator) new DefaultGenerator().opts(clientOptInput);
+            List<File> generatedFiles = generator.generate();
+            getLog().info(generatedFiles.size() + " generated Files");
+            if (CodeGenStatus.FAILED.equals(generator.status)) {
+                throw new CodegenerationException("Codegen failed by 'status'");
+            }
         } catch (Exception e) {
             throw new CodegenerationException(e.getMessage(), e);
         }
