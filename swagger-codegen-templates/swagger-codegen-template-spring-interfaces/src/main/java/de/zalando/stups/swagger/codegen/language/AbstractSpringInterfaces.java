@@ -221,4 +221,13 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
     @Override
     public void enableBuilderSupport() { }
 
+    @Override
+    public String toApiName(String name) {
+        if (name.length() == 0) {
+            return "DefaultApi";
+        }
+
+        name = sanitizeName(name);
+        return camelize(name) + "Api";
+    }
 }
