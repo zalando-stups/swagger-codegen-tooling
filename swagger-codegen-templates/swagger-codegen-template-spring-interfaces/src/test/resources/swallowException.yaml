@@ -1,0 +1,8 @@
+swagger: '2.0'
+info:
+  title: Swagger Codegen bug trigger
+  description: |
+     This demonstrates a bug in swagger-codegen.
+  version: 0.0.1
+basePath: /api
+#paths: {}
