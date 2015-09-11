@@ -1,1 +1,2 @@
-{{#isQueryParam}} @RequestParam("{{paramName}}" {{#required}},required=true{{/required}}) {{{dataType}}} {{paramName}}{{/isQueryParam}}
+{{#isQueryParam}} @RequestParam("{{baseName}}"{{#required}}, required=true{{/required}})
+    {{{dataType}}} {{paramName}}{{/isQueryParam}}
