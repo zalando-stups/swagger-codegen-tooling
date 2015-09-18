@@ -1,2 +1,2 @@
-{{#isHeaderParam}} @RequestHeader("{{baseName}}")
+{{#isHeaderParam}} @RequestHeader({{#required}}"{{baseName}}"{{/required}}{{^required}}value="{{baseName}}", required=false{{/required}})
     {{{dataType}}} {{paramName}}{{/isHeaderParam}}
