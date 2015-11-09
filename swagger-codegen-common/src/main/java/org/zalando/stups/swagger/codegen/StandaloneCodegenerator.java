@@ -16,7 +16,6 @@
 package org.zalando.stups.swagger.codegen;
 
 import java.io.File;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,12 +28,9 @@ import io.swagger.codegen.ClientOptInput;
 import io.swagger.codegen.ClientOpts;
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.DefaultGenerator;
-import io.swagger.codegen.languages.CodeGenStatus;
-
 import io.swagger.models.Model;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
-
 import io.swagger.parser.SwaggerParser;
 
 /**
@@ -154,9 +150,10 @@ public class StandaloneCodegenerator {
             DefaultGenerator generator = (DefaultGenerator) new DefaultGenerator().opts(clientOptInput);
             List<File> generatedFiles = generator.generate();
             getLog().info(generatedFiles.size() + " generated Files");
-            if (CodeGenStatus.FAILED.equals(generator.status)) {
-                throw new CodegenerationException("Codegen failed by 'status'");
-            }
+// 			updated to 2.1.4
+//            if (CodeGenStatus.FAILED.equals(generator.status)) {
+//                throw new CodegenerationException("Codegen failed by 'status'");
+//            }
         } catch (Exception e) {
             throw new CodegenerationException(e.getMessage(), e);
         }
