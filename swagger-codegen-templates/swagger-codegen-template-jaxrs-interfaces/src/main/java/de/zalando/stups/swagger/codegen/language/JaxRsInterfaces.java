@@ -223,4 +223,13 @@ public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig,
 // modelTemplateFiles.put("model303.mustache", ".java");
     }
 
+    @Override
+    public String toApiName(String name) {
+        if (name.length() == 0) {
+            return "DefaultApi";
+        }
+
+        name = sanitizeName(name);
+        return camelize(name) + "Api";
+    }
 }
