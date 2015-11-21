@@ -34,7 +34,7 @@ public interface {{classname}} {
   @ApiResponses(value = { {{#responses}}
     @ApiResponse(code = {{{code}}}, message = "{{{message}}}"){{#hasMore}},{{/hasMore}}{{/responses}}
   })
-  ResponseEntity<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},
+  ResponseEntity<{{>returnTypes}}> {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},
     {{/hasMore}}{{/allParams}});
 
 {{/operation}}
