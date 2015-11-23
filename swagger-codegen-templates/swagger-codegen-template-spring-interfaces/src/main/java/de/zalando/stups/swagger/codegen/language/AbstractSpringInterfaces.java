@@ -16,7 +16,6 @@
 package de.zalando.stups.swagger.codegen.language;
 
 import java.io.File;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -27,14 +26,11 @@ import org.zalando.stups.swagger.codegen.ConfigurableCodegenConfig;
 
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenResponse;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.languages.JavaClientCodegen;
-
 import io.swagger.models.Operation;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.Property;
 
 /**
  * https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen/src/main/java/com/wordnik/swagger/codegen/languages/JaxRSServerCodegen.java.
@@ -67,14 +63,6 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
     @Override
     public List<SupportingFile> supportingFiles() {
         supportingFiles.clear();
-// supportingFiles.add(new SupportingFile("ApiException.mustache", (apiPackage()).replace(".", File.separator),
-// "ApiException.java"));
-// supportingFiles.add(new SupportingFile("ApiOriginFilter.mustache", (apiPackage()).replace(".", File.separator),
-// "ApiOriginFilter.java"));
-// supportingFiles.add(new SupportingFile("ApiResponseMessage.mustache",
-// (apiPackage()).replace(".", File.separator), "ApiResponseMessage.java"));
-// supportingFiles.add(new SupportingFile("NotFoundException.mustache",
-// (apiPackage()).replace(".", File.separator), "NotFoundException.java"));
 
         languageSpecificPrimitives = new HashSet<String>(Arrays.asList("String", "boolean", "Boolean", "Double",
                     "Integer", "Long", "Float"));
@@ -111,22 +99,6 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
     }
 
     @Override
-    public String getTypeDeclaration(final Property p) {
-        if (p instanceof ArrayProperty) {
-            ArrayProperty ap = (ArrayProperty) p;
-            Property inner = ap.getItems();
-            return getSwaggerType(p) + "<" + getTypeDeclaration(inner) + ">";
-        } else if (p instanceof MapProperty) {
-            MapProperty mp = (MapProperty) p;
-            Property inner = mp.getAdditionalProperties();
-
-            return getTypeDeclaration(inner);
-        }
-
-        return super.getTypeDeclaration(p);
-    }
-
-    @Override
     public void addOperationToGroup(final String tag, final String resourcePath, final Operation operation,
             final CodegenOperation co, final Map<String, List<CodegenOperation>> operations) {
         String basePath = resourcePath;
@@ -159,41 +131,48 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
         co.baseName = basePath;
     }
 
-    public Map<String, Object> postProcessOperations(final Map<String, Object> objs) {
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         if (operations != null) {
             List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
             for (CodegenOperation operation : ops) {
+                List<CodegenResponse> responses = operation.responses;
+                if (responses != null) {
+                    for (CodegenResponse resp : responses) {
+                        if ("0".equals(resp.code)) {
+                            resp.code = "200";
+                        }
+                    }
+                }
+                System.out.println(operation.operationId);
+                io.swagger.util.Json.prettyPrint(operation);
+
                 if (operation.returnType == null) {
-                    // operation.returnType = "Void";
+                    operation.returnType = "Void";
                 } else if (operation.returnType.startsWith("List")) {
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
                     if (end > 0) {
-
-                        // operation.returnType = rt.substring("List<".length(), end);
+                        operation.returnType = rt.substring("List<".length(), end).trim();
                         operation.returnContainer = "List";
                     }
                 } else if (operation.returnType.startsWith("Map")) {
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
                     if (end > 0) {
-
-                        // operation.returnType = rt.substring("Map<".length(), end);
+                        operation.returnType = rt.substring("Map<".length(), end).split(",")[1].trim();
                         operation.returnContainer = "Map";
                     }
                 } else if (operation.returnType.startsWith("Set")) {
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
                     if (end > 0) {
-
-                        // operation.returnType = rt.substring("Set<".length(), end);
+                        operation.returnType = rt.substring("Set<".length(), end).trim();
                         operation.returnContainer = "Set";
                     }
                 }
             }
         }
-
         return objs;
     }
 
