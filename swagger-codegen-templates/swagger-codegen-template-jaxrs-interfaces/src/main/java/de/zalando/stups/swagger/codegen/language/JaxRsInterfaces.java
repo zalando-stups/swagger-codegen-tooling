@@ -165,7 +165,7 @@ public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig,
             List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
             for (CodegenOperation operation : ops) {
                 if (operation.returnType == null) {
-                    operation.returnType = "Void";
+                    operation.returnType = "void";
                 } else if (operation.returnType.startsWith("List")) {
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");

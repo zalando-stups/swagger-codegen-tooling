@@ -148,7 +148,7 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
                 io.swagger.util.Json.prettyPrint(operation);
 
                 if (operation.returnType == null) {
-                    operation.returnType = "Void";
+                    operation.returnType = "void";
                 } else if (operation.returnType.startsWith("List")) {
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
