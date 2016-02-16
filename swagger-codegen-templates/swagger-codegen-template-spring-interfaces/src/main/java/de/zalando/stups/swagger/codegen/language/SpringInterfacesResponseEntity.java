@@ -24,10 +24,17 @@ public class SpringInterfacesResponseEntity extends AbstractSpringInterfaces {
 
     protected String sourceFolder = "";
 
+    @Override
+    protected String getVoidReturnType() {
+        return "Void";
+    }
+
+    @Override
     public String getName() {
         return "springinterfacesResponseEntity";
     }
 
+    @Override
     public String getHelp() {
         return "Generates Spring-Interfaces with ResponseEntity.";
     }

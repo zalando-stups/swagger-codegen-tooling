@@ -16,18 +16,27 @@
 package de.zalando.stups.swagger.codegen.language;
 
 /**
- * https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen/src/main/java/com/wordnik/swagger/codegen/languages/JaxRSServerCodegen.java.
+ * https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-
+ * codegen/src/main/java/com/wordnik/swagger/codegen/languages/
+ * JaxRSServerCodegen.java.
  *
- * @author  jbellmann
+ * @author jbellmann
  */
 public class SpringInterfacesResponseEntityNoSwaggerAnnotations extends AbstractSpringInterfaces {
 
     protected String sourceFolder = "";
 
+    @Override
+    protected String getVoidReturnType() {
+        return "Void";
+    }
+
+    @Override
     public String getName() {
         return "springinterfacesResponseEntityNoSwaggerAnnotations";
     }
 
+    @Override
     public String getHelp() {
         return "Generates Spring-Interfaces with ResponseEntity without Swagger-Annotations.";
     }

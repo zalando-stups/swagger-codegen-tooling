@@ -41,14 +41,17 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
 
     protected String sourceFolder = "";
 
+    @Override
     public CodegenType getTag() {
         return CodegenType.SERVER;
     }
 
+    @Override
     public String getName() {
         return "springinterfaces";
     }
 
+    @Override
     public String getHelp() {
         return "Generates Spring-Interfaces.";
     }
@@ -75,6 +78,7 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
         return outputFolder + "/" + apiPackage().replace('.', File.separatorChar);
     }
 
+    @Override
     public String modelFileFolder() {
         return outputFolder + "/" + modelPackage().replace('.', File.separatorChar);
     }
@@ -131,6 +135,7 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
         co.baseName = basePath;
     }
 
+    @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         if (operations != null) {
@@ -148,7 +153,7 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
                 io.swagger.util.Json.prettyPrint(operation);
 
                 if (operation.returnType == null) {
-                    operation.returnType = "void";
+                    operation.returnType = getVoidReturnType();
                 } else if (operation.returnType.startsWith("List")) {
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
@@ -176,10 +181,16 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
         return objs;
     }
 
+    protected String getVoidReturnType() {
+        return "void";
+    }
+
+    @Override
     public void setApiPackage(final String apiPackage) {
         this.apiPackage = apiPackage;
     }
 
+    @Override
     public void setModelPackage(final String modelPackage) {
         this.modelPackage = modelPackage;
     }
