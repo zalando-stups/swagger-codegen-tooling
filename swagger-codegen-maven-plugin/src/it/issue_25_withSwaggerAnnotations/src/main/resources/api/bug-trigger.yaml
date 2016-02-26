@@ -1,0 +1,48 @@
+swagger: '2.0'
+info:
+  title: Swagger Codegen bug trigger
+  description: |
+     This demonstrates a bug in swagger-codegen-tooling.
+  version: 0.0.1
+basePath: /api
+
+definitions:
+
+  warehouse:
+    type: object
+    description: |
+      A warehouse is the location where ordered goods are delivered.
+      This object (when transmitted in JSON format) is known as
+      application/x.zalando.lumberjack.warehouse+json, a list of these as
+      application/x.zalando.lumberjack.warehouse-list+json.
+    properties:
+      self:
+        type: string
+        format: uri
+        description: a link to this warehouse object.
+        example:
+          /warehouses/WH-DE-EF
+      code:
+        type: string
+        description: |
+          The code of the warehouse.
+        example:
+          WH-DE-EF
+
+
+paths:
+# API endpoints
+  /warehouses:
+    get:
+      summary: Finds warehouses which fit to search parameters.
+      produces:
+        - application/x.zalando.lumberjack.warehouse-list+json
+        - application/x.problem+json
+      responses:
+        200:
+          description: The found warehouses or an empty list
+            if no warehouse fits to search parameter.
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/warehouse"
