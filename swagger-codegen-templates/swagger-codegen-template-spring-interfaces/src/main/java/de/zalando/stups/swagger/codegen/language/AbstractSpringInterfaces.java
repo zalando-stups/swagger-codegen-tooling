@@ -58,7 +58,7 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
 
     public AbstractSpringInterfaces() {
         super();
-        templateDir = "SpringInterfaces";
+        embeddedTemplateDir = templateDir = "SpringInterfaces";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
     }

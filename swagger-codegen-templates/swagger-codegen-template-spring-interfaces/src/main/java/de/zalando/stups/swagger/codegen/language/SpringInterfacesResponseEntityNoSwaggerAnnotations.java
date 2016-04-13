@@ -43,7 +43,7 @@ public class SpringInterfacesResponseEntityNoSwaggerAnnotations extends Abstract
 
     public SpringInterfacesResponseEntityNoSwaggerAnnotations() {
         super();
-        templateDir = "SpringInterfacesResponseEntityNoSwaggerAnnotations";
+        embeddedTemplateDir = templateDir = "SpringInterfacesResponseEntityNoSwaggerAnnotations";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
     }

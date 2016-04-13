@@ -34,7 +34,7 @@ public class SpringInterfaces extends AbstractSpringInterfaces {
 
     public SpringInterfaces() {
         super();
-        templateDir = "SpringInterfaces";
+        embeddedTemplateDir = templateDir = "SpringInterfaces";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
     }

@@ -41,7 +41,7 @@ public class SpringInterfacesResponseEntity extends AbstractSpringInterfaces {
 
     public SpringInterfacesResponseEntity() {
         super();
-        templateDir = "SpringInterfacesResponseEntity";
+        embeddedTemplateDir = templateDir = "SpringInterfacesResponseEntity";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
     }

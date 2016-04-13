@@ -34,7 +34,7 @@ public class SpringInterfacesNoSwaggerAnnotations extends AbstractSpringInterfac
 
     public SpringInterfacesNoSwaggerAnnotations() {
         super();
-        templateDir = "SpringInterfacesNoSwaggerAnnotations";
+        embeddedTemplateDir = templateDir = "SpringInterfacesNoSwaggerAnnotations";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
     }
