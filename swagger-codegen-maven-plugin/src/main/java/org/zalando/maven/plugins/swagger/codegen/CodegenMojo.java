@@ -16,8 +16,8 @@
 package org.zalando.maven.plugins.swagger.codegen;
 
 import java.io.File;
-
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -27,10 +27,11 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
-
 import org.zalando.stups.swagger.codegen.CodegenerationException;
 import org.zalando.stups.swagger.codegen.StandaloneCodegenerator;
 import org.zalando.stups.swagger.codegen.YamlToJson;
+
+import com.google.common.collect.ImmutableMap;
 
 /**
  * @author  jbellmann
@@ -73,6 +74,9 @@ public class CodegenMojo extends AbstractMojo {
     private boolean enableBuilderSupport = false;
 
     @Parameter
+    private Map<String,Object> additionalProperties = ImmutableMap.of();
+
+    @Parameter
     private ArrayList<String> excludedModels = new ArrayList<String>();
 
     @Parameter
@@ -84,7 +88,7 @@ public class CodegenMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
 
-        StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFilePath(apiFile)
+        final StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFilePath(apiFile)
                                                                    .forLanguage(language)
                                                                    .writeResultsTo(outputDirectory)
                                                                    .withApiPackage(apiPackage)
@@ -93,6 +97,7 @@ public class CodegenMojo extends AbstractMojo {
                                                                    .skipModelgeneration(skipModelgeneration)
                                                                    .skipApigeneration(skipApigeneration)
                                                                    .withModelsExcluded(excludedModels)
+                                                                   .additionalProperties(additionalProperties)
                                                                    .enable303(enable303)
                                                                    .enableBuilderSupport(enableBuilderSupport).build();
 
@@ -103,14 +108,14 @@ public class CodegenMojo extends AbstractMojo {
             project.addCompileSourceRoot(generator.getOutputDirectoryPath());
 
             if (yamlToJson) {
-                YamlToJson converter = YamlToJson.builder().withYamlInputPath(apiFile)
+                final YamlToJson converter = YamlToJson.builder().withYamlInputPath(apiFile)
                                                  .withCodegeneratorLogger(new MojoCodegeneratorLogger(getLog()))
                                                  .withOutputDirectoryPath(yamlToJsonOutputDirectory.getAbsolutePath())
                                                  .build();
                 converter.convert();
             }
 
-        } catch (CodegenerationException e) {
+        } catch (final CodegenerationException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
     }
