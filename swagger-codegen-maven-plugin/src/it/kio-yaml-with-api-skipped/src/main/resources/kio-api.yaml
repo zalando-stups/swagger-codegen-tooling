@@ -129,8 +129,9 @@ paths:
           required: true
         - name: secret
           in: body
-          type: string
-          description: The application's new secret
+          schema:
+            type: string
+            description: The application's new secret
           required: true
       responses:
         200:
@@ -144,6 +145,7 @@ paths:
 
 definitions:
   Application:
+    type: object
     properties:
       id:
         type: string
@@ -168,6 +170,7 @@ definitions:
         description: URL of documentation
 
   ApplicationDetails:
+    type: object
     properties:
       name:
         type: string
@@ -195,6 +198,7 @@ definitions:
       - scm_url
 
   ApplicationSummary:
+    type: object
     properties:
       id:
         type: string
@@ -207,6 +211,7 @@ definitions:
         description: ID of the team, responsible for this application
 
   Error:
+    type: object
     properties:
       code:
         type: integer
