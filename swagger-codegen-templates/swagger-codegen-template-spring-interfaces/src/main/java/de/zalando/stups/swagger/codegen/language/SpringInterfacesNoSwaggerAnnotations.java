@@ -15,6 +15,11 @@
  */
 package de.zalando.stups.swagger.codegen.language;
 
+import java.util.Map;
+
+import io.swagger.codegen.CodegenModel;
+import io.swagger.models.Model;
+
 /**
  * https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen/src/main/java/com/wordnik/swagger/codegen/languages/JaxRSServerCodegen.java.
  *
@@ -24,19 +29,30 @@ public class SpringInterfacesNoSwaggerAnnotations extends AbstractSpringInterfac
 
     protected String sourceFolder = "";
 
+    @Override
     public String getName() {
         return "springinterfacesNoSwaggerAnnotations";
     }
 
+    @Override
     public String getHelp() {
         return "Generates Spring-Interfaces without Swagger-Annotations.";
     }
 
     public SpringInterfacesNoSwaggerAnnotations() {
         super();
-        templateDir = "SpringInterfacesNoSwaggerAnnotations";
+        embeddedTemplateDir = templateDir = "SpringInterfacesNoSwaggerAnnotations";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
+    }
+
+    @Override
+    public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
+        final CodegenModel cgModel = super.fromModel(name, model, allDefinitions);
+        // these are imports for the swagger annotations. We don't want those.
+        cgModel.imports.remove("ApiModel");
+        cgModel.imports.remove("ApiModelProperty");
+        return cgModel;
     }
 
     @Override

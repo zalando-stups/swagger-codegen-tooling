@@ -59,7 +59,7 @@ public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig,
 
     public JaxRsInterfaces() {
         super();
-        templateDir = "JaxRsInterfaces";
+        embeddedTemplateDir = templateDir = "JaxRsInterfaces";
         modelTemplateFiles.put("model.mustache", ".java");
         apiTemplateFiles.put("api.mustache", ".java");
     }
