@@ -1,0 +1,109 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.example.fail</groupId>
+	<artifactId>test-spring-interface</artifactId>
+	<packaging>jar</packaging>
+	<version>0-SNAPSHOT</version>
+	<name>UI Apps Admin Service Spring MVC</name>
+
+	<properties>
+		<spring-boot.version>1.3.3.RELEASE</spring-boot.version>
+                <swagger-core-version>1.5.7</swagger-core-version>
+                <swagger.codegen.maven.plugin.version>@project.version@</swagger.codegen.maven.plugin.version>
+                <swagger.codegen.templates.version>@project.version@</swagger.codegen.templates.version>
+                <build.helper.maven.plugin.version>1.9.1</build.helper.maven.plugin.version>
+
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+                        <scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-core</artifactId>
+			<version>${swagger-core-version}</version>
+                        <scope>compile</scope>
+		</dependency>
+	</dependencies>
+	<build>
+                <pluginManagement>
+                        <plugins>
+                                <plugin>
+                <groupId>@project.groupId@</groupId>
+                <artifactId>@project.artifactId@</artifactId>
+                <version>@project.version@</version>
+                                        <dependencies>
+                                                <dependency>
+                                                        <groupId>org.zalando.stups</groupId>
+                                                        <artifactId>swagger-codegen-template-spring-interfaces</artifactId>
+                                                        <version>${swagger.codegen.templates.version}</version>
+                                                </dependency>
+                                                <dependency>
+                                                        <groupId>org.zalando.stups</groupId>
+                                                        <artifactId>swagger-codegen-template-jaxrs-interfaces</artifactId>
+                                                        <version>${swagger.codegen.templates.version}</version>
+                                                </dependency>
+                                        </dependencies>
+                                </plugin>
+                       </plugins>
+                </pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.zalando.maven.plugins</groupId>
+				<artifactId>swagger-codegen-maven-plugin</artifactId>
+				<version>@project.version@</version>
+				<executions>
+					<execution>
+						<id>YAML to code Generation</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>codegen</goal>
+						</goals>
+						<configuration>
+							<apiFile>${basedir}/src/main/resources/test.yaml</apiFile>
+							<apiPackage>com.example.test.api</apiPackage>
+							<modelPackage>com.example.test.api.model</modelPackage>
+							<language>springinterfaces</language>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>${build.helper.maven.plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/swager-codegen</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>
