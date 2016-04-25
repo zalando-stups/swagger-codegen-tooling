@@ -16,6 +16,8 @@
 package org.zalando.stups.swagger.codegen;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -181,9 +183,19 @@ public class StandaloneCodegenerator {
     }
 
     protected void checkApiFileExist() throws CodegenerationException {
-        final File file = new File(apiFile);
-        if (!file.exists()) {
-            throw new CodegenerationException("The 'apiFile' does not exists at : " + apiFile);
+        try {
+            URL url = new URL(apiFile);
+            String prot = url.getProtocol();
+            if ((!"https".equals(prot)) || (!"http".equals(prot))) {
+                getLog().info("'apiFile' should use 'http' or 'https'");
+            }
+            return;
+        } catch (MalformedURLException e) {
+            getLog().info("'apiFile' seems not be an valid URL, check file exist");
+            final File file = new File(apiFile);
+            if (!file.exists()) {
+                throw new CodegenerationException("The 'apiFile' does not exists at : " + apiFile);
+            }
         }
     }
 

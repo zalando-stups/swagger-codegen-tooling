@@ -18,13 +18,14 @@ package org.zalando.stups.swagger.codegen;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.net.URL;
 import java.nio.file.Files;
 
 import org.apache.commons.io.IOUtils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.io.Resources;
 
 import io.swagger.util.Yaml;
 
@@ -71,7 +72,13 @@ public class YamlToJson {
     }
 
     protected String getYamlFileContentAsJson() throws IOException {
-        String data = new String(Files.readAllBytes(java.nio.file.Paths.get(new File(yamlInputPath).toURI())));
+        String data = "";
+        if (yamlInputPath.startsWith("http") || yamlInputPath.startsWith("https")) {
+
+            data = new String(Resources.toByteArray(new URL(yamlInputPath)));
+        } else {
+            data = new String(Files.readAllBytes(java.nio.file.Paths.get(new File(yamlInputPath).toURI())));
+        }
 
         ObjectMapper yamlMapper = Yaml.mapper();
         JsonNode rootNode = yamlMapper.readTree(data);
@@ -83,14 +90,23 @@ public class YamlToJson {
     }
 
     protected String getYamlFilename() {
-
-        File file = new File(yamlInputPath);
-        if (!file.exists()) {
-            throw new RuntimeException("Api-File not found: " + yamlInputPath);
+        if (yamlInputPath.startsWith("http") || yamlInputPath.startsWith("https")) {
+            int lastSlashIndex = yamlInputPath.lastIndexOf("/");
+            String filename = yamlInputPath.substring(lastSlashIndex + 1);
+            return filenameSubstring(filename);
         } else {
-            String filename = file.getName();
-            return filename.substring(0, filename.indexOf("."));
+            File file = new File(yamlInputPath);
+            if (!file.exists()) {
+                throw new RuntimeException("Api-File not found: " + yamlInputPath);
+            } else {
+                String filename = file.getName();
+                return filenameSubstring(filename);
+            }
         }
+    }
+
+    protected String filenameSubstring(String filename) {
+        return filename.substring(0, filename.indexOf("."));
     }
 
     public static YamlToJsonBuilder builder() {
