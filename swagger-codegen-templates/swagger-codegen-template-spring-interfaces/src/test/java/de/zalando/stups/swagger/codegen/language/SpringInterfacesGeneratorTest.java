@@ -16,11 +16,9 @@
 package de.zalando.stups.swagger.codegen.language;
 
 import java.io.File;
-
 import java.util.UUID;
 
 import org.junit.Test;
-
 import org.zalando.stups.swagger.codegen.CodegenerationException;
 import org.zalando.stups.swagger.codegen.StandaloneCodegenerator;
 
@@ -180,6 +178,38 @@ public class SpringInterfacesGeneratorTest {
                                                                    .writeResultsTo(generateOutputDir()).build();
 
         generator.generate();
+    }
+
+    // @formatter:off
+    @Test
+    public void testGenerationFromYamlFormUpload() throws CodegenerationException {
+        StandaloneCodegenerator generator = StandaloneCodegenerator.builder()
+                                                                   .withApiFile(getFormUploadYamlFile())
+                                                                   .forLanguage("springinterfaces")
+                                                                   .withApiPackage("de.zalando.swagger.api")
+                                                                   .withModelPackage("de.zalando.swagger.model")
+                                                                   .writeResultsTo(generateOutputDir())
+                                                                   .build();
+
+        generator.generate();
+    }
+
+    @Test
+    public void testGenerationFromYamlFormUploadNoAnnotations() throws CodegenerationException {
+        StandaloneCodegenerator generator = StandaloneCodegenerator.builder()
+                                                                   .withApiFile(getFormUploadYamlFile())
+                                                                   .forLanguage("springinterfacesNoSwaggerAnnotations")
+                                                                   .withApiPackage("de.zalando.swagger.api")
+                                                                   .withModelPackage("de.zalando.swagger.model")
+                                                                   .writeResultsTo(generateOutputDir())
+                                                                   .build();
+
+        generator.generate();
+    }
+    // @formatter:on
+
+    protected File getFormUploadYamlFile() {
+        return new File(getClass().getResource("/formUpload.yaml").getFile());
     }
 
     protected File getApiJsonFile() {

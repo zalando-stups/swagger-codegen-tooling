@@ -1,0 +1,23 @@
+swagger: "2.0"
+info: 
+  title: "Test"
+  version: "1.0.0"
+  description: "Demonstrate spring-interfaces failure"
+host: "localhost"
+basePath: "/test"
+schemes: 
+  - "http"
+paths: 
+  /upload: 
+    post: 
+      summary: "Upload an Application"
+      description: ""
+      parameters: 
+        - name: application
+          in: formData
+          description: File for the application.
+          required: true
+          type: file
+      responses: 
+        201: 
+          description: "Created"
