@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.zalando.stups</groupId>
+        <artifactId>swagger-codegen-tooling</artifactId>
+        <version>0.4.27-SNAPSHOT</version>
+    </parent>
+    <artifactId>swagger-codegen-gradle-plugin</artifactId>
+
+    <properties>
+        <gradle.version>1.12</gradle.version>
+        <groovy.version>2.4.6</groovy.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.zalando.stups</groupId>
+            <artifactId>swagger-codegen-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- Provided -->
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>${groovy.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.gradle</groupId>
+            <artifactId>gradle-core</artifactId>
+            <version>${gradle.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.gradle</groupId>
+            <artifactId>gradle-base-services</artifactId>
+            <version>${gradle.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.gradle</groupId>
+            <artifactId>gradle-plugins</artifactId>
+            <version>${gradle.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>gradle</id>
+            <url>http://repo.gradle.org/gradle/libs-releases-local</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+</project>

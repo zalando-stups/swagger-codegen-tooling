@@ -20,6 +20,7 @@
         <module>swagger-codegen-maven-plugin</module>
         <module>docs</module>
         <module>spring-boot-stups-swagger-codegen-ui</module>
+        <module>swagger-codegen-gradle-plugin</module>
     </modules>
 
     <properties>
