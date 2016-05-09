@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2015 Zalando SE (http://tech.zalando.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.zalando.gradle.plugins.swagger;
 
 import java.io.File;
@@ -23,11 +38,6 @@ import org.zalando.stups.swagger.codegen.StandaloneCodegenerator;
 import org.zalando.stups.swagger.codegen.YamlToJson;
 
 public class SwaggerCodegenTask extends SourceTask {
-
-    // private File thrift;
-
-    // private NamedDomainObjectContainer<Generator> generators =
-    // getProject().container(Generator.class);
 
     private final ArrayList<File> include = new ArrayList<>();
 
@@ -81,6 +91,7 @@ public class SwaggerCodegenTask extends SourceTask {
     // "${project.build.directory}/classes")
     private File yamlToJsonOutputDirectory = getProject().file("build/generated-src/swagger-codegen");
 
+    //@formatter:off
     @TaskAction
     public void invokeSwaggerCodegen(final IncrementalTaskInputs inputs) throws Exception {
         final ArrayList<File> inputFiles = new ArrayList<>();
@@ -97,23 +108,34 @@ public class SwaggerCodegenTask extends SourceTask {
             inputFiles.addAll(getSource().getFiles());
         }
 
+        
         try {
 
-            final StandaloneCodegenerator swaggerGenerator = StandaloneCodegenerator.builder().withApiFilePath(apiFile)
-                    .forLanguage(language).writeResultsTo(out).withApiPackage(apiPackage).withModelPackage(modelPackage)
-                    .withLogger(new GradleCodegeneratorLogger(getProject().getLogger()))
-                    .skipModelgeneration(skipModelgeneration).skipApigeneration(skipApigeneration)
-                    .withModelsExcluded(excludedModels).additionalProperties(additionalProperties).enable303(enable303)
-                    .enableBuilderSupport(enableBuilderSupport).build();
+            final StandaloneCodegenerator swaggerGenerator = StandaloneCodegenerator.builder()
+                                                                                     .withApiFilePath(apiFile)
+                                                                                     .forLanguage(language)
+                                                                                     .writeResultsTo(out)
+                                                                                     .withApiPackage(apiPackage)
+                                                                                     .withModelPackage(modelPackage)
+                                                                                     .withLogger(new GradleCodegeneratorLogger(getProject().getLogger()))
+                                                                                     .skipModelgeneration(skipModelgeneration)
+                                                                                     .skipApigeneration(skipApigeneration)
+                                                                                     .withModelsExcluded(excludedModels)
+                                                                                     .additionalProperties(additionalProperties)
+                                                                                     .enable303(enable303)
+                                                                                     .enableBuilderSupport(enableBuilderSupport)
+                                                                                     .build();
 
             try {
                 swaggerGenerator.generate();
 
                 if (yamlToJson) {
 
-                    final YamlToJson converter = YamlToJson.builder().withYamlInputPath(apiFile)
-                            .withCodegeneratorLogger(new GradleCodegeneratorLogger(getProject().getLogger()))
-                            .withOutputDirectoryPath(yamlToJsonOutputDirectory.getAbsolutePath()).build();
+                    final YamlToJson converter = YamlToJson.builder()
+                                                            .withYamlInputPath(apiFile)
+                                                            .withCodegeneratorLogger(new GradleCodegeneratorLogger(getProject().getLogger()))
+                                                            .withOutputDirectoryPath(yamlToJsonOutputDirectory.getAbsolutePath())
+                                                            .build();
                     converter.convert();
                 }
             } catch (CodegenerationException e) {
@@ -122,28 +144,11 @@ public class SwaggerCodegenTask extends SourceTask {
         } catch (GradleException e) {
             throw e;
         } catch (Exception e) {
-            throw new GradleException("Unexpected error while executing thrift: " + e.getMessage(), e);
+            throw new GradleException("Unexpected error while executing swagger-codegen: " + e.getMessage(), e);
 
         }
-
-        // for (final Generator generator : generators) {
-        // for (final File file : inputFiles) {
-        // final File out = generatorOutputDirectory(generator);
-        //
-        // final List<String> command = buildCommand(generator, out,
-        // file.getAbsolutePath());
-        // getProject().getLogger().info("Running swagger-codegen: " + command);
-        // if (!out.isDirectory()) {
-        // if (!out.mkdirs()) {
-        // throw new GradleException("Could not create swagger-codegen output
-        // directory: " + out);
-        // }
-        // }
-        //
-        //
-        // }
-        // }
     }
+    //@formatter:on
 
     @OutputDirectories
     public Set<File> getOutputDirectories() {
@@ -168,11 +173,6 @@ public class SwaggerCodegenTask extends SourceTask {
     public SourceDirectorySet getSource() {
         return source;
     }
-
-    // @Input
-    // public Map<String, Generator> getGenerators() {
-    // return generators.getAsMap();
-    // }
 
     @Input
     public List<File> getInclude() {
@@ -199,11 +199,6 @@ public class SwaggerCodegenTask extends SourceTask {
         return debug;
     }
 
-    // @Input
-    // public String executable() {
-    // return this.thrift != null ? this.thrift.getAbsolutePath() : "thrift";
-    // }
-
     public void out(Object dir) {
         this.out = getProject().file(dir);
     }
@@ -228,90 +223,66 @@ public class SwaggerCodegenTask extends SourceTask {
         include.add(getProject().file(file));
     }
 
-    // public void generators(Closure c) {
-    // generators.configure(c);
-    // }
+    @Input
+    public String getApiFile() {
+        return apiFile;
+    }
 
-    // public void executable(final Object executable) {
-    // this.thrift = getProject().file(executable);
-    // }
+    public void setApiFile(String apiFile) {
+        this.apiFile = apiFile;
+    }
 
-    // public List<String> buildCommand(final Generator generator, File out,
-    // String fileName) {
-    // final String thrift = executable();
-    // final List<String> command = new ArrayList<>(Arrays.asList(thrift,
-    // "-out", out.getAbsolutePath()));
-    // command.add("--gen");
-    // command.add(generator.getName() + ":" + join(",",
-    // generator.getOptions()));
-    // for (final File include : this.include) {
-    // command.add("-I");
-    // command.add(include.getAbsolutePath());
-    // }
-    // if (recurse)
-    // command.add("-recurse");
-    // if (verbose)
-    // command.add("-verbose");
-    // if (strict)
-    // command.add("-strict");
-    // if (debug)
-    // command.add("-debug");
-    // command.add(fileName);
-    // return command;
-    // }
-    //
-    // private static String join(final String sep, final List<String> arg) {
-    // final StringBuilder sb = new StringBuilder();
-    // for (int i = 0; i < arg.size(); i++) {
-    // sb.append(arg.get(i));
-    // if (i < arg.size() - 1) {
-    // sb.append(sep);
-    // }
-    // }
-    // return sb.toString();
-    // }
-    //
-    // private File generatorOutputDirectory(final Generator generator) {
-    // if (generator.getOut() != null) {
-    // return getProject().file(generator.getOut());
-    // } else {
-    // return this.out;
-    // }
-    // }
-    //
-    // private final class SlurpThread extends Thread {
-    // private final CountDownLatch latch;
-    // private final InputStream in;
-    // private final PrintStream out;
-    //
-    // public SlurpThread(final CountDownLatch latch, final InputStream in,
-    // final PrintStream out) {
-    // setDaemon(true);
-    //
-    // this.latch = latch;
-    // this.in = in;
-    // this.out = out;
-    // }
-    //
-    // @Override
-    // public void run() {
-    // try {
-    // final InputStreamReader reader = new InputStreamReader(in);
-    // final char[] buf = new char[8 * 1024];
-    // for (;;) {
-    // try {
-    // if (reader.read(buf) <= 0) {
-    // break;
-    // }
-    // out.print(buf);
-    // } catch (IOException e) {
-    // getLogger().error("Failed to read from input stream", e);
-    // break;
-    // }
-    // }
-    // } finally {
-    // latch.countDown();
-    // }
-    // }
-    // }
+    @Input
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    @Input
+    public String getApiPackage() {
+        return apiPackage;
+    }
+
+    public void setApiPackage(String apiPackage) {
+        this.apiPackage = apiPackage;
+    }
+
+    @Input
+    public String getModelPackage() {
+        return modelPackage;
+    }
+
+    public void setModelPackage(String modelPackage) {
+        this.modelPackage = modelPackage;
+    }
+
+    @Input
+    public boolean isSkipModelgeneration() {
+        return skipModelgeneration;
+    }
+
+    public void setSkipModelgeneration(boolean skipModelgeneration) {
+        this.skipModelgeneration = skipModelgeneration;
+    }
+
+    @Input
+    public boolean isSkipApigeneration() {
+        return skipApigeneration;
+    }
+
+    public void setSkipApigeneration(boolean skipApigeneration) {
+        this.skipApigeneration = skipApigeneration;
+    }
+
+    @Input
+    public boolean isYamlToJson() {
+        return yamlToJson;
+    }
+
+    public void setYamlToJson(boolean yamlToJson) {
+        this.yamlToJson = yamlToJson;
+    }
 }

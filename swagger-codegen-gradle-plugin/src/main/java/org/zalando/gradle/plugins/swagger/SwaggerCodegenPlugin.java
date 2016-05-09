@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2015 Zalando SE (http://tech.zalando.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.zalando.gradle.plugins.swagger;
 
 import java.io.File;
@@ -16,6 +31,7 @@ import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 
 public class SwaggerCodegenPlugin implements Plugin<Project> {
+
     private final FileResolver fileResolver;
 
     @Inject
@@ -32,9 +48,10 @@ public class SwaggerCodegenPlugin implements Plugin<Project> {
     }
 
     private void configureConfigurations(final Project project) {
-        final Configuration thriftConfiguration = project.getConfigurations().create("swagger-codegen")
+        final Configuration swaggerCodegenConfiguration = project.getConfigurations().create("swagger-codegen")
                 .setVisible(false);
-        project.getConfigurations().getByName(JavaPlugin.COMPILE_CONFIGURATION_NAME).extendsFrom(thriftConfiguration);
+
+        project.getConfigurations().getByName(JavaPlugin.COMPILE_CONFIGURATION_NAME).extendsFrom(swaggerCodegenConfiguration);
 
     }
 
@@ -54,8 +71,10 @@ public class SwaggerCodegenPlugin implements Plugin<Project> {
                         ((DefaultSourceSet) sourceSet).getDisplayName(), fileResolver);
 
                 new DslObject(sourceSet).getConvention().getPlugins().put("swagger-codegen", swaggerCodegenSourceSet);
+
                 final String srcDir = String.format("src/%s/swagger-codegen", sourceSet.getName());
                 // thriftSourceSet.getThrift().srcDir(srcDir);
+
                 swaggerCodegenSourceSet.getSwaggerCodegen().srcDir(srcDir);
                 // sourceSet.getAllSource().source(thriftSourceSet.getThrift());
                 sourceSet.getAllSource().source(swaggerCodegenSourceSet.getSwaggerCodegen());
@@ -79,6 +98,18 @@ public class SwaggerCodegenPlugin implements Plugin<Project> {
                 // thriftTask.setSource(thriftSourceSet.getThrift());
                 swaggerCodegenTask.setSource(swaggerCodegenSourceSet.getSwaggerCodegen());
 
+                // could we set an extra-classpath only for generation?
+                // swaggerCodegenTask.getConventionMapping().map("swagger-codegenClasspath",
+                // new Callable<Object>() {
+                //
+                // @Override
+                // public Object call() throws Exception {
+                // return
+                // project.getConfigurations().getByName("swagger-codegen").copy().setTransitive(true);
+                // }
+                //
+                // });
+
                 //
                 // 4. Set up the thrift output directory (adding to javac inputs)
                 //
@@ -89,6 +120,7 @@ public class SwaggerCodegenPlugin implements Plugin<Project> {
                 // thriftTask.out(outputDirectory);
                 swaggerCodegenTask.out(outputDirectory);
                 sourceSet.getJava().srcDir(outputDirectory);
+
 
                 //
                 // 5. Register the fact that thrit should run before compiling.
