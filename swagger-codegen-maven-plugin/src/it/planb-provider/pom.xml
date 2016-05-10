@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.zalando.maven.plugins.codegen.plan-b-example.it</groupId>
+    <artifactId>plan-b-example</artifactId>
+    <version>0.0.1.BUILD-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>1.3.4.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.8</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>@project.groupId@</groupId>
+                <artifactId>@project.artifactId@</artifactId>
+                <version>@project.version@</version>
+                <executions>
+                    <!-- spring-interfaces that uses ResponseEntities as return-type, without swagger-annotations -->
+                    <execution>
+                        <id>generate-code-springinterfacesResponseEntityNoSwaggerAnnotations</id>
+                        <goals>
+                            <goal>codegen</goal>
+                        </goals>
+                        <configuration>
+                            <apiFile>https://raw.githubusercontent.com/zalando/planb-provider/master/src/main/resources/api/plan-b-api.yml</apiFile>
+                            <language>springinterfacesResponseEntityNoSwaggerAnnotations</language>
+                            <apiPackage>org.zalando.planb.provider.api</apiPackage>
+                            <yamlToJson>true</yamlToJson>
+                            <yamlToJsonOutputDirectory>${project.build.directory}/classes</yamlToJsonOutputDirectory>
+                            <enableBuilderSupport>true</enableBuilderSupport>
+                        </configuration>
+                    </execution>
+                    <!-- spring-interfaces that uses ResponseEntities as return-type -->
+                    <execution>
+                        <id>generate-code-springinterfacesResponseEntity</id>
+                        <goals>
+                            <goal>codegen</goal>
+                        </goals>
+                        <configuration>
+                            <apiFile>https://raw.githubusercontent.com/zalando/planb-provider/master/src/main/resources/api/plan-b-api.yml</apiFile>
+                            <language>springinterfacesResponseEntity</language>
+                            <apiPackage>org.zalando.planb.provider.api.springinterfacesResponseEntity</apiPackage>
+                            <enableBuilderSupport>true</enableBuilderSupport>
+                        </configuration>
+                    </execution>
+                    <!-- simple spring-interfaces -->
+                    <execution>
+                        <id>generate-code-springinterfaces</id>
+                        <goals>
+                            <goal>codegen</goal>
+                        </goals>
+                        <configuration>
+                            <apiFile>https://raw.githubusercontent.com/zalando/planb-provider/master/src/main/resources/api/plan-b-api.yml</apiFile>
+                            <language>springinterfaces</language>
+                            <apiPackage>org.zalando.planb.provider.api.springinterfaces</apiPackage>
+                            <enableBuilderSupport>true</enableBuilderSupport>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
