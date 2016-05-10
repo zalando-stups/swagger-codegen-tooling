@@ -66,7 +66,6 @@ swaggerCodegen {
 
 NOTE: The Swagger-Codegen-Gradle-Plugin is currently in development. So be prepared for changes.
 
-
 ### Development/Contribution
 
 
