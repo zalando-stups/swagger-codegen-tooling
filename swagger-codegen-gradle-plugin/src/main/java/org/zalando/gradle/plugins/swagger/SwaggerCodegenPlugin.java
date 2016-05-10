@@ -82,48 +82,34 @@ public class SwaggerCodegenPlugin implements Plugin<Project> {
                 //
                 // 2. Create a ThriftTask for this sourceSet
                 //
-                final String taskName = sourceSet.getTaskName("generate", "SwaggerCodegenSource");
-                // final ThriftTask thriftTask =
-                // project.getTasks().create(taskName, ThriftTask.class);
+                final String taskName = sourceSet.getTaskName("swaggerCodegen", "");
+
                 final SwaggerCodegenTask swaggerCodegenTask = project.getTasks().create(taskName,
                         SwaggerCodegenTask.class);
-                // thriftTask.setDescription(String.format("Processes the %s
-                // Thrift IDLs.", sourceSet.getName()));
+
                 swaggerCodegenTask
                         .setDescription(String.format("Processes the %s Open-API definition.", sourceSet.getName()));
 
                 //
                 // 3. Set up convention mapping for default sources (allows user to not have to specify)
                 //
-                // thriftTask.setSource(thriftSourceSet.getThrift());
                 swaggerCodegenTask.setSource(swaggerCodegenSourceSet.getSwaggerCodegen());
 
-                // could we set an extra-classpath only for generation?
-                // swaggerCodegenTask.getConventionMapping().map("swagger-codegenClasspath",
-                // new Callable<Object>() {
                 //
-                // @Override
-                // public Object call() throws Exception {
-                // return
-                // project.getConfigurations().getByName("swagger-codegen").copy().setTransitive(true);
-                // }
-                //
-                // });
-
-                //
-                // 4. Set up the thrift output directory (adding to javac inputs)
+                // 4. Set up the swagger-codegen output directory (adding to
+                // javac inputs)
                 //
                 final String outputDirectoryName =
                         String.format("%s/generated-src/swagger-codegen/%s", project.getBuildDir(),
                                 sourceSet.getName());
                 final File outputDirectory = new File(outputDirectoryName);
-                // thriftTask.out(outputDirectory);
                 swaggerCodegenTask.out(outputDirectory);
                 sourceSet.getJava().srcDir(outputDirectory);
 
 
                 //
-                // 5. Register the fact that thrit should run before compiling.
+                // 5. Register the fact that swagger-codegen should run before
+                // compiling.
                 //
                 project.getTasks().getByName(sourceSet.getCompileJavaTaskName()).dependsOn(taskName);
             }

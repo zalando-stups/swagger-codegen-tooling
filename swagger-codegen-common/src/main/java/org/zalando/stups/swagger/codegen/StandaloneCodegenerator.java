@@ -194,6 +194,7 @@ public class StandaloneCodegenerator {
             getLog().info("'apiFile' seems not be an valid URL, check file exist");
             final File file = new File(apiFile);
             if (!file.exists()) {
+                getLog().info("The 'apiFile' does not exists at : " + apiFile);
                 throw new CodegenerationException("The 'apiFile' does not exists at : " + apiFile);
             }
         }

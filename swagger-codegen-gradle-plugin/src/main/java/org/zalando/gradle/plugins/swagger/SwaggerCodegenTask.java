@@ -45,14 +45,6 @@ public class SwaggerCodegenTask extends SourceTask {
 
     private File out = getProject().file("build/generated-src/swagger-codegen");
 
-    private boolean recurse = true;
-
-    private boolean verbose = false;
-
-    private boolean strict = false;
-
-    private boolean debug = false;
-
     // @Parameter(required = true, defaultValue =
     // "${project.basedir}/src/main/resources/swagger.yaml")
     private String apiFile;
@@ -84,11 +76,8 @@ public class SwaggerCodegenTask extends SourceTask {
     // @Parameter
     private ArrayList<String> excludedModels = new ArrayList<>();
 
-    // @Parameter
     private boolean yamlToJson = false;
 
-    // @Parameter(required = true, defaultValue =
-    // "${project.build.directory}/classes")
     private File yamlToJsonOutputDirectory = getProject().file("build/generated-src/swagger-codegen");
 
     //@formatter:off
@@ -179,44 +168,8 @@ public class SwaggerCodegenTask extends SourceTask {
         return include;
     }
 
-    @Input
-    public boolean isRecurse() {
-        return recurse;
-    }
-
-    @Input
-    public boolean isVerbose() {
-        return verbose;
-    }
-
-    @Input
-    public boolean isStrict() {
-        return strict;
-    }
-
-    @Input
-    public boolean isDebug() {
-        return debug;
-    }
-
     public void out(Object dir) {
         this.out = getProject().file(dir);
-    }
-
-    public void recurse(boolean recurse) {
-        this.recurse = recurse;
-    }
-
-    public void verbose(boolean verbose) {
-        this.verbose = verbose;
-    }
-
-    public void strict(boolean strict) {
-        this.strict = strict;
-    }
-
-    public void debug(boolean debug) {
-        this.debug = debug;
     }
 
     public void path(Object file) {
