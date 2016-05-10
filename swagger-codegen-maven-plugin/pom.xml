@@ -59,6 +59,16 @@
             <artifactId>swagger-codegen-common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.zalando.stups</groupId>
+            <artifactId>swagger-codegen-template-jaxrs-interfaces</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.zalando.stups</groupId>
+            <artifactId>swagger-codegen-template-spring-interfaces</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- Compile -->
         <dependency>
             <groupId>org.apache.maven</groupId>
