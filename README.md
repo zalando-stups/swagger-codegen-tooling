@@ -1,18 +1,14 @@
-##WORK IN PROGRESS -- USE AT YOUR OWN RISK
-
 [![Build Status](https://travis-ci.org/zalando-stups/swagger-codegen-tooling.svg?branch=master)](https://travis-ci.org/zalando-stups/swagger-codegen-tooling)
 
-###Build
+### Swagger-Codegen-Tooling
 
-    mvn clean install
+The project provides some tooling around Maven and Gradle to generate code from OpenAPI-Specs. It comes with custom-templates to support Spring-MVC/Spring-Boot projects. Instead of generating code only once when a project starts (design phase), code will be generated at every build to make sure your code is in sync with
+your spec. So controllers/resources are generated as interfaces developers have to implement then. So changes
+in the spec should be reflected immediately on build/compile-step.
 
-###Run with integration-tests enabled
+#### Getting started with Maven
 
-    mvn clean install -Pintegration
-
-###Swagger-Codegen-Maven-Plugin
-
-Plugin for Maven that generates pieces of code specified in the 'swagger.yaml' (maybe created with Swagger-Editor).
+To get started in a Maven project just add the following plugin-definition to you pom.xml.
 
 ```xml
     <plugin>
@@ -20,24 +16,81 @@ Plugin for Maven that generates pieces of code specified in the 'swagger.yaml' (
         <artifactId>swagger-codegen-maven-plugin</artifactId>
         <version>${version}</version>
         <configuration>
-            <apiFile>${project.basedir}/src/main/resources/petstore.json</apiFile>
-            <language>jaxrsinterfaces</language>
-            <apiPackage>org.zalando.project.api</apiPackage>
-            <modelPackage>org.zalando.project.model</modelPackage>
+            <apiFile>${project.basedir}/src/main/resources/api.yaml</apiFile>
+            <language>springinterfaces</language>
+            <apiPackage>com.example.project.api</apiPackage>
+            <modelPackage>com.example.project.model</modelPackage>
         </configuration>
-        <!-- Bundle custom templates into jars and add as dependency -->
-        <dependencies>
-            <dependency>
-                <groupId>org.zalando.stups</groupId>
-                <artifactId>swagger-codegen-template-jaxrs-interfaces</artifactId>
-                <version>${version}</version>
-            </dependency>
-        </dependencies>
+        <executions>
+            <execution>
+                <id>swagger-codegen</id>
+                <goals>
+                    <goal>codegen</goal>
+                </goals>
+            </execution>
+        </executions>
     </plugin>
 ```
 
-Examples ([spring-boot-jaxrs](https://github.com/zalando-stups/swagger-codegen-tooling/tree/master/swagger-codegen-maven-plugin/src/it/spring-boot-jersey)) can be found at the integration-test section.
+According to your OpenAPI-spec (api.yaml) code will be generated in `${basedir}/target/generated-sources/swagger-codegen`
 
+More examples how to use the Maven-Plugin can be found in the [integration-test](https://github.com/zalando-stups/swagger-codegen-tooling/tree/master/swagger-codegen-maven-plugin/src/it) section.
+
+#### Getting started with Gradle
+
+To get started in a Gradle project, make sure the following configuration is present in your `build.gradle`
+
+```
+apply plugin: 'java'
+apply plugin: 'swagger-codegen'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.zalando.stups:swagger-codegen-gradle-plugin:${version}'
+    }
+}
+
+swaggerCodegen {
+    apiFile 'src/main/swagger-codegen/kio-api.yaml'
+    language 'jaxrsinterfaces'
+    apiPackage 'com.example.project.api'
+    modelPackage 'com.example.project.model'
+}
+
+...
+```
+
+NOTE: The Swagger-Codegen-Gradle-Plugin is currently in development. So be prepared for changes.
+
+
+### Development/Contribution
+
+
+#### Build
+
+The project itself uses Maven:
+
+    mvn clean install
+
+#### Run with integration-tests enabled
+
+    mvn clean install -Pintegration
+
+#### TODO's
+
+* improve robustness for Gradle-Plugin
+* improve Templates (what about [Controllers that delegate to an interface](https://github.com/zalando-stups/swagger-codegen-tooling/issues/32))
+* improve documentation
+* prepare an example that uses [spring-restdocs](https://projects.spring.io/spring-restdocs)
+
+
+#### Contributions
+
+Many thanks to [ePaul](https://github.com/ePaul) for reporting issues and code-contributions.
 
 ## License
 
