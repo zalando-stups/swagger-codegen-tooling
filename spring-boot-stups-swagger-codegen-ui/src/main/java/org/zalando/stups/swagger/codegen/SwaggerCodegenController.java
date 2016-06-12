@@ -16,30 +16,31 @@
 package org.zalando.stups.swagger.codegen;
 
 import java.io.IOException;
-
 import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.StreamUtils;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Simple {@link RestController} to support swagger-ui.
  *
- * @author  jbellmann
+ * @author jbellmann
  */
 @RestController
 public class SwaggerCodegenController {
 
     private final SwaggerCodegenProperties swaggerCodegenProperties;
+    private final ResourceLoader resourceLoader;
 
     @Autowired
-    public SwaggerCodegenController(final SwaggerCodegenProperties swaggerCodegenProperties) {
+    public SwaggerCodegenController(final SwaggerCodegenProperties swaggerCodegenProperties, ResourceLoader resourceLoader) {
         this.swaggerCodegenProperties = swaggerCodegenProperties;
+        this.resourceLoader = resourceLoader;
     }
 
     @RequestMapping(value = "/swagger-resources")
@@ -53,7 +54,8 @@ public class SwaggerCodegenController {
 
     @RequestMapping(value = "/v2/api-docs")
     public String getApi() throws IOException {
-        return new String(StreamUtils.copyToByteArray(
-                    getClass().getResourceAsStream(swaggerCodegenProperties.getApiClasspathLocation())));
+        final Resource r = resourceLoader.getResource(swaggerCodegenProperties.getApiClasspathLocation());
+        return new String(StreamUtils.copyToByteArray(r.getInputStream()));
+
     }
 }
