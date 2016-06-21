@@ -86,6 +86,9 @@ The project itself uses Maven:
 * improve documentation
 * prepare an example that uses [spring-restdocs](https://projects.spring.io/spring-restdocs)
 
+#### API-SPEC
+
+https://github.com/OAI/OpenAPI-Specification/blob/OpenAPI.next/versions/3.0.md
 
 #### Contributions
 
