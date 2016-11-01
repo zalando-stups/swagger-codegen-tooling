@@ -13,6 +13,8 @@ externalDocs:
 # will be prefixed to all paths
 produces:
   - application/json
+consumes:
+  - application/json
 paths:
   /vacations:
     get:
