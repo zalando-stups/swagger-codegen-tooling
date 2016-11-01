@@ -24,6 +24,8 @@ import java.util.Map;
 
 import org.zalando.stups.swagger.codegen.ConfigurableCodegenConfig;
 
+import com.google.common.collect.Lists;
+
 import io.swagger.codegen.CodegenConfig;
 import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenResponse;
@@ -135,12 +137,20 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
         co.baseName = basePath;
     }
 
+    private final List<String> methodsWithoutRequestBody = Lists.newArrayList("GET");
+
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         if (operations != null) {
             List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
             for (CodegenOperation operation : ops) {
+                if(methodsWithoutRequestBody.contains(operation.httpMethod)) {
+                    operation.vendorExtensions.put("consumesExpected", false);
+                }else{
+                    operation.vendorExtensions.put("consumesExpected", true);
+                }
+
                 List<CodegenResponse> responses = operation.responses;
                 if (responses != null) {
                     for (CodegenResponse resp : responses) {
