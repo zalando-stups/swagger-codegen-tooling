@@ -18,7 +18,9 @@
         <module>swagger-codegen-common</module>
         <module>swagger-codegen-templates</module>
         <module>swagger-codegen-maven-plugin</module>
+        <!--
         <module>swagger-codegen-gradle-plugin</module>
+        -->
         <module>docs</module>
         <module>spring-boot-stups-swagger-codegen-ui</module>
     </modules>
