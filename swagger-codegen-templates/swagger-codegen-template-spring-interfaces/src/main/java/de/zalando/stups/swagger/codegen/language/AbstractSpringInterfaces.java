@@ -37,11 +37,25 @@ import io.swagger.models.Operation;
 /**
  * https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen/src/main/java/com/wordnik/swagger/codegen/languages/JaxRSServerCodegen.java.
  *
- * @author  jbellmann
+ * @author jbellmann
  */
 public class AbstractSpringInterfaces extends JavaClientCodegen implements CodegenConfig, ConfigurableCodegenConfig {
 
     protected String sourceFolder = "";
+
+    private boolean skipApiGeneration = false;
+
+    private boolean skipModelGeneration = false;
+
+    @Override
+    public void skipApiGeneration() {
+        skipApiGeneration = true;
+    }
+
+    @Override
+    public void skipModelGeneration() {
+        skipModelGeneration = true;
+    }
 
     @Override
     public CodegenType getTag() {
@@ -69,8 +83,8 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
     public List<SupportingFile> supportingFiles() {
         supportingFiles.clear();
 
-        languageSpecificPrimitives = new HashSet<String>(Arrays.asList("String", "boolean", "Boolean", "Double",
-                    "Integer", "Long", "Float"));
+        languageSpecificPrimitives = new HashSet<String>(
+                Arrays.asList("String", "boolean", "Boolean", "Double", "Integer", "Long", "Float"));
 
         return supportingFiles;
     }
@@ -87,6 +101,10 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
 
     @Override
     public String modelPackage() {
+        if (skipModelGeneration) {
+            return "MODEL_SKIPPED";
+        }
+
         if (this.modelPackage == null || this.modelPackage.trim().isEmpty()) {
             throw new RuntimeException("'modelPackage' should not be null or empty");
         }
@@ -96,6 +114,9 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
 
     @Override
     public String apiPackage() {
+        if (skipApiGeneration) {
+            return "API_SKIPPED";
+        }
 
         if (this.apiPackage == null || this.apiPackage.trim().isEmpty()) {
             throw new RuntimeException("'apiPackage' should not be null or empty");
@@ -145,9 +166,9 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
         if (operations != null) {
             List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");
             for (CodegenOperation operation : ops) {
-                if(methodsWithoutRequestBody.contains(operation.httpMethod)) {
+                if (methodsWithoutRequestBody.contains(operation.httpMethod)) {
                     operation.vendorExtensions.put("consumesExpected", false);
-                }else{
+                } else {
                     operation.vendorExtensions.put("consumesExpected", true);
                 }
 
@@ -211,7 +232,8 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
     }
 
     @Override
-    public void enable303() { }
+    public void enable303() {
+    }
 
     @Override
     public boolean isBuilderSupported() {
@@ -219,7 +241,8 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
     }
 
     @Override
-    public void enableBuilderSupport() { }
+    public void enableBuilderSupport() {
+    }
 
     @Override
     public String toApiName(String name) {

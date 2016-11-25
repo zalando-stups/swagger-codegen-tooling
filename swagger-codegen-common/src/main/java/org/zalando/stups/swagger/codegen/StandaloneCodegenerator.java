@@ -40,7 +40,7 @@ import io.swagger.parser.SwaggerParser;
 /**
  * Extracted from Mojo to reuse for easier template-testing.
  *
- * @author  jbellmann
+ * @author jbellmann
  */
 public class StandaloneCodegenerator {
 
@@ -102,9 +102,26 @@ public class StandaloneCodegenerator {
 
         if (codegenConfig instanceof ConfigurableCodegenConfig) {
 
-            // config
-            ((ConfigurableCodegenConfig) codegenConfig).setApiPackage(apiPackage);
-            ((ConfigurableCodegenConfig) codegenConfig).setModelPackage(modelPackage);
+            // DefaultGenerator-line 72
+            if (skipApigeneration) {
+                ((ConfigurableCodegenConfig) codegenConfig).skipApiGeneration();
+            }
+
+            if (skipModelgeneration) {
+                ((ConfigurableCodegenConfig) codegenConfig).skipModelGeneration();
+            }
+
+            if (skipApigeneration && apiPackage == null) {
+                ((ConfigurableCodegenConfig) codegenConfig).setApiPackage("");
+            } else {
+                // config
+                ((ConfigurableCodegenConfig) codegenConfig).setApiPackage(apiPackage);
+            }
+            if (skipModelgeneration && modelPackage == null) {
+                ((ConfigurableCodegenConfig) codegenConfig).setModelPackage("");
+            } else {
+                ((ConfigurableCodegenConfig) codegenConfig).setModelPackage(modelPackage);
+            }
 
             if (enable303) {
                 getLog().info("JSR 303 enabled ...");
@@ -135,11 +152,13 @@ public class StandaloneCodegenerator {
 
         if (skipApigeneration) {
             getLog().info("API-GENERATION DISABLED ...");
+            System.setProperty("models", "");
             swagger.setPaths(new HashMap<String, Path>(0));
         }
 
         if (skipModelgeneration) {
             getLog().info("MODEL-GENERATION DISABLED ...");
+            System.setProperty("apis", "");
             swagger.setDefinitions(new HashMap<String, Model>(0));
         } else if (!excludedModels.isEmpty()) {
             final Iterator<Entry<String, Model>> it = swagger.getDefinitions().entrySet().iterator();
@@ -158,10 +177,10 @@ public class StandaloneCodegenerator {
             final DefaultGenerator generator = (DefaultGenerator) new DefaultGenerator().opts(clientOptInput);
             final List<File> generatedFiles = generator.generate();
             getLog().info(generatedFiles.size() + " generated Files");
-// 			updated to 2.1.4
-//            if (CodeGenStatus.FAILED.equals(generator.status)) {
-//                throw new CodegenerationException("Codegen failed by 'status'");
-//            }
+            // updated to 2.1.4
+            // if (CodeGenStatus.FAILED.equals(generator.status)) {
+            // throw new CodegenerationException("Codegen failed by 'status'");
+            // }
         } catch (final Exception e) {
             throw new CodegenerationException(e.getMessage(), e);
         }
@@ -217,7 +236,7 @@ public class StandaloneCodegenerator {
             getLog().info("register config : '" + config.getName() + "' with class : " + config.getClass().getName());
             configs.put(config.getName(), config);
             // do not know
-// configString = sb.toString();
+            // configString = sb.toString();
         }
     }
 
@@ -272,7 +291,7 @@ public class StandaloneCodegenerator {
 
         private List<String> excludedModels = new ArrayList<String>(0);
 
-        private Map<String, Object> additionalProperties =  ImmutableMap.of();
+        private Map<String, Object> additionalProperties = ImmutableMap.of();
 
         public CodegeneratorBuilder withApiFilePath(final String pathToApiFile) {
             this.apiFile = pathToApiFile;

@@ -16,7 +16,6 @@
 package de.zalando.stups.swagger.codegen.language;
 
 import java.io.File;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -30,7 +29,6 @@ import io.swagger.codegen.CodegenOperation;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.languages.JavaClientCodegen;
-
 import io.swagger.models.Operation;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
@@ -232,4 +230,18 @@ public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig,
         name = sanitizeName(name);
         return camelize(name) + "Api";
     }
+
+    @Override
+    public void skipApiGeneration() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void skipModelGeneration() {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    
 }

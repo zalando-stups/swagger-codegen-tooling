@@ -18,9 +18,13 @@ package org.zalando.stups.swagger.codegen;
 /**
  * Missing for tooling, it seems better to be able to set these properties.
  *
- * @author  jbellmann
+ * @author jbellmann
  */
 public interface ConfigurableCodegenConfig {
+
+    void skipApiGeneration();
+
+    void skipModelGeneration();
 
     void setApiPackage(String apiPackage);
 

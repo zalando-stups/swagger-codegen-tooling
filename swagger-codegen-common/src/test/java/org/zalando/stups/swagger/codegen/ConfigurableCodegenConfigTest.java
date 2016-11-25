@@ -16,13 +16,12 @@
 package org.zalando.stups.swagger.codegen;
 
 import org.assertj.core.api.Assertions;
-
 import org.junit.Test;
 
 import io.swagger.codegen.DefaultCodegen;
 
 /**
- * @author  jbellmann
+ * @author jbellmann
  */
 public class ConfigurableCodegenConfigTest {
 
@@ -40,19 +39,33 @@ public class ConfigurableCodegenConfigTest {
 
         Assertions.assertThat(codegenConfig.getOutputDir()).isEqualTo("/a/path/to/generatedOutput");
 
-        Assertions.assertThat(codegenConfig.apiFileFolder()).isEqualTo(
-            "/a/path/to/generatedOutput/org/zalando/stups/api");
-        Assertions.assertThat(codegenConfig.modelFileFolder()).isEqualTo(
-            "/a/path/to/generatedOutput/org/zalando/stups/model");
+        Assertions.assertThat(codegenConfig.apiFileFolder())
+                .isEqualTo("/a/path/to/generatedOutput/org/zalando/stups/api");
+        Assertions.assertThat(codegenConfig.modelFileFolder())
+                .isEqualTo("/a/path/to/generatedOutput/org/zalando/stups/model");
 
     }
 
     /**
      * Simple {@link TestConfigurableCodegenConfig} for testing.
      *
-     * @author  jbellmann
+     * @author jbellmann
      */
     static class TestConfigurableCodegenConfig extends DefaultCodegen implements ConfigurableCodegenConfig {
+
+        private boolean skipApiGeneration = false;
+
+        private boolean skipModelGeneration = false;
+
+        @Override
+        public void skipApiGeneration() {
+            skipApiGeneration = true;
+        }
+
+        @Override
+        public void skipModelGeneration() {
+            skipModelGeneration = true;
+        }
 
         @Override
         public void setApiPackage(final String apiPackage) {
@@ -70,7 +83,8 @@ public class ConfigurableCodegenConfigTest {
         }
 
         @Override
-        public void enable303() { }
+        public void enable303() {
+        }
 
         @Override
         public boolean isBuilderSupported() {

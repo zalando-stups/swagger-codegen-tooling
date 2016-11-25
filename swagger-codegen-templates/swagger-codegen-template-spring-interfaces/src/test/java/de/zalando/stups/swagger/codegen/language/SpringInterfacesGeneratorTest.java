@@ -206,6 +206,20 @@ public class SpringInterfacesGeneratorTest {
 
         generator.generate();
     }
+    
+    @Test
+    public void testGenerationFromYamlSkipApiGeneration() throws CodegenerationException {
+        StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFile(getApiYamlFile())
+                                                                   .forLanguage(
+                                                                       "springinterfacesResponseEntityNoSwaggerAnnotations")
+                                                                   .withApiPackage(null)
+                                                                   .skipApigeneration(true)
+                                                                   .withModelPackage("de.zalando.swagger.model")
+                                                                   .writeResultsTo(generateOutputDir()).enable303(true)
+                                                                   .enableBuilderSupport(true).build();
+
+        generator.generate();
+    }
     // @formatter:on
 
     protected File getFormUploadYamlFile() {

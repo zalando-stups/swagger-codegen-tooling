@@ -56,10 +56,10 @@ public class CodegenMojo extends AbstractMojo {
     private String language;
 
     @Parameter
-    private String apiPackage;
+    private String apiPackage = "";
 
     @Parameter
-    private String modelPackage;
+    private String modelPackage = "";
 
     @Parameter(defaultValue = "false")
     private boolean skipModelgeneration = false;
