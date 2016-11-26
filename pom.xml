@@ -10,7 +10,7 @@
 
     <groupId>org.zalando.stups</groupId>
     <artifactId>swagger-codegen-tooling</artifactId>
-    <version>0.4.33-SNAPSHOT</version>
+    <version>0.4.32-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Swagger-Codegen-Tooling -- Parent</name>
 
