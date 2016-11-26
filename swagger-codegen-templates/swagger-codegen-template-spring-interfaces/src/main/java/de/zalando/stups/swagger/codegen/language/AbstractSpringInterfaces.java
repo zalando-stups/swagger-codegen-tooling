@@ -126,8 +126,7 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
     }
 
     @Override
-    public void addOperationToGroup(final String tag, final String resourcePath, final Operation operation,
-            final CodegenOperation co, final Map<String, List<CodegenOperation>> operations) {
+    public void addOperationToGroup(final String tag, final String resourcePath, final Operation operation, final CodegenOperation co, final Map<String, List<CodegenOperation>> operations) {
         String basePath = resourcePath;
         if (basePath.startsWith("/")) {
             basePath = basePath.substring(1);
@@ -158,7 +157,7 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
         co.baseName = basePath;
     }
 
-    private final List<String> methodsWithoutRequestBody = Lists.newArrayList("GET");
+    private final List<String> methodsWithoutRequestBody = Lists.newArrayList("GET", "DELETE");
 
     @Override
     public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
