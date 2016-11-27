@@ -184,6 +184,7 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
 
                 if (operation.returnType == null) {
                     operation.returnType = getVoidReturnType();
+                    operation.hasProduces = Boolean.FALSE;
                 } else if (operation.returnType.startsWith("List")) {
                     String rt = operation.returnType;
                     int end = rt.lastIndexOf(">");
