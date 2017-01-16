@@ -16,6 +16,6 @@
     <modules>
         <module>swagger-codegen-template-jaxrs-interfaces</module>
         <module>swagger-codegen-template-spring-interfaces</module>
+        <module>swagger-codegen-template-spring-interfaces-split</module>
     </modules>
-
 </project>
