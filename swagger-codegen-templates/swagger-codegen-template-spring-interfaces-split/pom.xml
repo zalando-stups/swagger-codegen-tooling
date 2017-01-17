@@ -18,7 +18,11 @@
             <artifactId>swagger-codegen-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.zalando.stups</groupId>
+            <artifactId>swagger-codegen-template-spring-interfaces</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

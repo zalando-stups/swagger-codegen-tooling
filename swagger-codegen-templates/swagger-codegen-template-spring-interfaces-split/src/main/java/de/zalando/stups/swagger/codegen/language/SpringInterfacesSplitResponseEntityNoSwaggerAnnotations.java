@@ -27,15 +27,7 @@ import io.swagger.models.Model;
  *
  * @author jbellmann
  */
-public class SpringInterfacesSplitResponseEntityNoSwaggerAnnotations extends AbstractSpringInterfaces {
-
-    protected String sourceFolder = "";
-
-    @Override
-    protected String getVoidReturnType() {
-        return "Void";
-    }
-
+public class SpringInterfacesSplitResponseEntityNoSwaggerAnnotations extends SpringInterfacesResponseEntityNoSwaggerAnnotations {
     @Override
     public String getName() {
         return "springinterfacesSplitResponseEntityNoSwaggerAnnotations";
@@ -43,45 +35,12 @@ public class SpringInterfacesSplitResponseEntityNoSwaggerAnnotations extends Abs
 
     @Override
     public String getHelp() {
-        return "Generates Spring-Interfaces with ResponseEntity without Swagger-Annotations.";
+        return "Generates Spring-Interfaces and concrete Rest Service Implementation with ResponseEntity without Swagger-Annotations.";
     }
 
     public SpringInterfacesSplitResponseEntityNoSwaggerAnnotations() {
         super();
         embeddedTemplateDir = templateDir = "SpringInterfacesSplitResponseEntityNoSwaggerAnnotations";
-        modelTemplateFiles.put("model.mustache", ".java");
-        apiTemplateFiles.put("api.mustache", ".java");
         apiTemplateFiles.put("api-impl.mustache", "Impl.java");
     }
-
-    @Override
-    public CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions) {
-        final CodegenModel cgModel = super.fromModel(name, model, allDefinitions);
-        // these are imports for the swagger annotations. We don't want those.
-        cgModel.imports.remove("ApiModel");
-        cgModel.imports.remove("ApiModelProperty");
-        return cgModel;
-    }
-
-    @Override
-    public boolean is303Supported() {
-        return true;
-    }
-
-    @Override
-    public void enable303() {
-        modelTemplateFiles.remove("model.mustache");
-        modelTemplateFiles.put("model303.mustache", ".java");
-    }
-
-    @Override
-    public boolean isBuilderSupported() {
-        return true;
-    }
-
-    @Override
-    public void enableBuilderSupport() {
-        modelTemplateFiles.put("modelBuilder.mustache", "Builder.java");
-    }
-
 }
