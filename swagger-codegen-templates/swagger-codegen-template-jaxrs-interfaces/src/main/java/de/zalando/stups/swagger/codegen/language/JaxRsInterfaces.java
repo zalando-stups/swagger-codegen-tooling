@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import io.swagger.models.Swagger;
 import org.zalando.stups.swagger.codegen.ConfigurableCodegenConfig;
 
 import io.swagger.codegen.CodegenConfig;
@@ -49,6 +50,12 @@ public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig,
 
     public String getName() {
         return "jaxrsinterfaces";
+    }
+
+    @Override
+    public void preprocessSwagger(Swagger swagger) {
+        vendorExtensions.put("basePath", swagger.getBasePath());
+        super.preprocessSwagger(swagger);
     }
 
     public String getHelp() {
