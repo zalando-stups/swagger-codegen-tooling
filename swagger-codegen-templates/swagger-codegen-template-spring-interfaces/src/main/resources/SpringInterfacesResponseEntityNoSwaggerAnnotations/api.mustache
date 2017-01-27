@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 //
 
 {{#operations}}
+@RequestMapping(value="{{vendorExtensions.basePath}}")
 public interface {{classname}} {
 
 {{#operation}}
