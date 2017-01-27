@@ -1,0 +1,34 @@
+package {{package}};
+
+{{#imports}}import {{import}};
+{{/imports}}
+
+{{#models}}
+
+//GENERATED CLASS DO NOT EDIT
+{{#model}}
+
+import {{package}}.{{classname}}.*;
+
+public class {{classname}}Builder {
+
+  private {{classname}} internal;
+
+  public {{classname}}Builder() {
+    internal = new {{classname}}();
+  }
+
+{{#vars}}
+  public {{classname}}Builder {{name}}({{{datatypeWithEnum}}} {{name}}) {
+    internal.{{setter}}({{name}});
+    return this;
+  }
+
+{{/vars}}
+
+  public {{classname}} build()  {
+    return internal;
+  }
+}
+{{/model}}
+{{/models}}

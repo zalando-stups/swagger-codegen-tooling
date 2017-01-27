@@ -3,4 +3,5 @@
 .settings
 pom.xml.versionsBackup
 target
-
+*.iml
+.idea
