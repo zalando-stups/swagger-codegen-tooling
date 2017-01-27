@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import io.swagger.models.Swagger;
 import org.zalando.stups.swagger.codegen.ConfigurableCodegenConfig;
 
 import com.google.common.collect.Lists;
@@ -65,6 +66,12 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
     @Override
     public String getName() {
         return "springinterfaces";
+    }
+
+    @Override
+    public void preprocessSwagger(Swagger swagger) {
+        vendorExtensions.put("basePath", swagger.getBasePath());
+        super.preprocessSwagger(swagger);
     }
 
     @Override

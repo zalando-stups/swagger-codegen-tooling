@@ -44,7 +44,7 @@ public class ApiFirstIT {
         String username = "klaus";
 
         //
-        WebTarget target = client.target("http://localhost:" + port).path("user/" + username);
+        WebTarget target = client.target("http://localhost:" + port).path("v2/user/" + username);
         User user = target.request(MediaType.APPLICATION_JSON_TYPE).get(User.class);
 
         //

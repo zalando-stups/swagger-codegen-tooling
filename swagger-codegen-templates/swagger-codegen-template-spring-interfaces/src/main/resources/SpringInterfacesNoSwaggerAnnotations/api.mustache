@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 //
 
 {{#operations}}
+@RequestMapping(value="{{vendorExtensions.basePath}}")
 public interface {{classname}} {
-
 {{#operation}}
   @RequestMapping(value="/{{baseName}}{{path}}",method=RequestMethod.{{httpMethod}}{{#vendorExtensions.consumesExpected}}{{#hasConsumes}},consumes={ {{#consumes}}"{{mediaType}}"{{#hasMore}},{{/hasMore}}{{/consumes}} }{{/hasConsumes}}{{/vendorExtensions.consumesExpected}} {{#hasProduces}}, produces={ {{#produces}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/produces}} }{{/hasProduces}})
   {{>returnTypes}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},
