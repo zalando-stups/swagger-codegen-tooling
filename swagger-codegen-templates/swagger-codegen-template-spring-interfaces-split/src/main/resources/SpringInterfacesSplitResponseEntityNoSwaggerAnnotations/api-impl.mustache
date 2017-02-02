@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 //
 
 {{#operations}}@RestController
+@RequestMapping(value="{{vendorExtensions.basePath}}")
 public final class {{classname}}Impl implements {{classname}} {
   private {{classname}} impl;
 
