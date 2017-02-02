@@ -1,6 +1,11 @@
-[![Build Status](https://travis-ci.org/zalando-stups/swagger-codegen-tooling.svg?branch=master)](https://travis-ci.org/zalando-stups/swagger-codegen-tooling)
+## Swagger-Codegen-Tooling
 
-### Swagger-Codegen-Tooling
+[![Build Status](https://travis-ci.org/zalando-stups/swagger-codegen-tooling.svg?branch=master)](https://travis-ci.org/zalando-stups/swagger-codegen-tooling)
+[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/org.zalando.stups/swagger-codegen-tooling/badge.svg)](http://www.javadoc.io/doc/org.zalando.stups/swagger-codegen-tooling)
+[![Release](https://img.shields.io/github/release/zalando-stups/swagger-codegen-tooling.svg)](https://github.com/zalando-stups/swagger-codegen-tooling/releases)
+[![Maven Central](https://img.shields.io/maven-central/v/org.zalando.stups/swagger-codegen-tooling.svg)](https://maven-badges.herokuapp.com/maven-central/org.zalando.stups/swagger-codegen-tooling)
+[![License](https://img.shields.io/hexpm/l/plug.svg)](https://raw.githubusercontent.com/zalando-stups/swagger-codegen-tooling/master/LICENSE)
+
 
 The project provides some tooling around Maven and Gradle to generate code from OpenAPI-Specs. It comes with custom-templates to support Spring-MVC/Spring-Boot projects. Instead of generating code only once when a project starts (design phase), code will be generated at every build to make sure your code is in sync with
 your spec. So controllers/resources are generated as interfaces developers have to implement then. So changes
