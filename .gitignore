@@ -2,6 +2,7 @@
 .classpath
 .settings
 pom.xml.versionsBackup
+pom.xml.releaseBackup
 target
 *.iml
 .idea
