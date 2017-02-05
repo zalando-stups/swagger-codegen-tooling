@@ -41,6 +41,6 @@ public class SpringInterfacesSplitResponseEntityNoSwaggerAnnotations extends Spr
     public SpringInterfacesSplitResponseEntityNoSwaggerAnnotations() {
         super();
         embeddedTemplateDir = templateDir = "SpringInterfacesSplitResponseEntityNoSwaggerAnnotations";
-        apiTemplateFiles.put("api-impl.mustache", "Impl.java");
+        apiTemplateFiles.put("api-controller.mustache", "Controller.java");
     }
 }

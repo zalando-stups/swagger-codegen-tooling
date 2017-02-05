@@ -23,11 +23,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 {{#operations}}@RestController
 @RequestMapping(value="{{vendorExtensions.basePath}}")
-public final class {{classname}}Impl implements {{classname}} {
+public final class {{classname}}Controller implements {{classname}} {
   private {{classname}} impl;
 
   @Autowired
-  public {{classname}}Impl({{classname}} impl) {
+  public {{classname}}Controller({{classname}} impl) {
     this.impl = impl;
   }
 
