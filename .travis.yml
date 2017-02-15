@@ -4,5 +4,5 @@ jdk:
   - oraclejdk8
 
 script:
-    - mvn -q clean install
-    - mvn -q clean install -Pintegration
+    - mvn clean install
+    - mvn clean install -Pintegration
