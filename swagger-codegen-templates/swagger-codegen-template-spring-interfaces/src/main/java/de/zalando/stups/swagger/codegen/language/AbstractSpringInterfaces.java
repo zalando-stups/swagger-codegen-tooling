@@ -22,18 +22,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import io.swagger.models.Swagger;
 import org.zalando.stups.swagger.codegen.ConfigurableCodegenConfig;
 
 import com.google.common.collect.Lists;
 
 import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenResponse;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.models.Operation;
+import io.swagger.models.Swagger;
 
 /**
  * https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen/src/main/java/com/wordnik/swagger/codegen/languages/JaxRSServerCodegen.java.
@@ -133,7 +135,8 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
     }
 
     @Override
-    public void addOperationToGroup(final String tag, final String resourcePath, final Operation operation, final CodegenOperation co, final Map<String, List<CodegenOperation>> operations) {
+    public void addOperationToGroup(final String tag, final String resourcePath, final Operation operation,
+            final CodegenOperation co, final Map<String, List<CodegenOperation>> operations) {
         String basePath = resourcePath;
         if (basePath.startsWith("/")) {
             basePath = basePath.substring(1);
@@ -162,6 +165,19 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
 
         opList.add(co);
         co.baseName = basePath;
+    }
+
+    @Override
+    public void processOpts() {
+        super.processOpts();
+        // we do not want to have
+        importMapping.remove("SerializedName");
+    }
+
+    @Override
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
+        super.postProcessModelProperty(model, property);
+        model.imports.remove("SerializedName");
     }
 
     private final List<String> methodsWithoutRequestBody = Lists.newArrayList("GET", "DELETE");

@@ -69,6 +69,15 @@ public class StandaloneCodegenerator {
     private Map<String, Object> additionalProperties;
 
     private List<String> excludedModels;
+    
+    //
+    private boolean skipModelTests = true;
+    
+    private boolean skipModelDocs = true;
+    
+    private boolean skipApiTests = true;
+    
+    private boolean skipApiDocs = true;
 
     public static CodegeneratorBuilder builder() {
         return new CodegeneratorBuilder();
@@ -169,6 +178,20 @@ public class StandaloneCodegenerator {
                     it.remove();
                 }
             }
+        }
+        
+        if(skipModelTests){
+            System.setProperty("modelTests", Boolean.FALSE.toString());
+        }
+        
+        if(skipModelDocs){
+            System.setProperty("modelDocs", Boolean.FALSE.toString());
+        }
+        if(skipApiTests){
+            System.setProperty("apiTests", Boolean.FALSE.toString());
+        }
+        if(skipApiDocs){
+            System.setProperty("apiDocs", Boolean.FALSE.toString());
         }
 
         try {
