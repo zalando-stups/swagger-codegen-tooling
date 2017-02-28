@@ -22,15 +22,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import io.swagger.models.Swagger;
 import org.zalando.stups.swagger.codegen.ConfigurableCodegenConfig;
 
 import io.swagger.codegen.CodegenConfig;
+import io.swagger.codegen.CodegenModel;
 import io.swagger.codegen.CodegenOperation;
+import io.swagger.codegen.CodegenProperty;
 import io.swagger.codegen.CodegenType;
 import io.swagger.codegen.SupportingFile;
 import io.swagger.codegen.languages.JavaClientCodegen;
 import io.swagger.models.Operation;
+import io.swagger.models.Swagger;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
@@ -38,7 +40,7 @@ import io.swagger.models.properties.Property;
 /**
  * https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen/src/main/java/com/wordnik/swagger/codegen/languages/JaxRSServerCodegen.java.
  *
- * @author  jbellmann
+ * @author jbellmann
  */
 public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig, ConfigurableCodegenConfig {
 
@@ -81,8 +83,8 @@ public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig,
         supportingFiles.add(new SupportingFile("NotFoundException.mustache",
                 (apiPackage()).replace(".", File.separator), "NotFoundException.java"));
 
-        languageSpecificPrimitives = new HashSet<String>(Arrays.asList("String", "boolean", "Boolean", "Double",
-                    "Integer", "Long", "Float"));
+        languageSpecificPrimitives = new HashSet<String>(
+                Arrays.asList("String", "boolean", "Boolean", "Double", "Integer", "Long", "Float"));
 
         return supportingFiles;
     }
@@ -164,6 +166,19 @@ public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig,
         co.baseName = basePath;
     }
 
+    @Override
+    public void processOpts() {
+        super.processOpts();
+        // we do not want to have
+        importMapping.remove("SerializedName");
+    }
+
+    @Override
+    public void postProcessModelProperty(CodegenModel model, CodegenProperty property) {
+        super.postProcessModelProperty(model, property);
+        model.imports.remove("SerializedName");
+    }
+
     public Map<String, Object> postProcessOperations(final Map<String, Object> objs) {
         Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
         if (operations != null) {
@@ -224,8 +239,8 @@ public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig,
 
     @Override
     public void enable303() {
-// modelTemplateFiles.remove("model.mustache");
-// modelTemplateFiles.put("model303.mustache", ".java");
+        // modelTemplateFiles.remove("model.mustache");
+        // modelTemplateFiles.put("model303.mustache", ".java");
     }
 
     @Override
@@ -241,14 +256,13 @@ public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig,
     @Override
     public void skipApiGeneration() {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void skipModelGeneration() {
         // TODO Auto-generated method stub
-        
+
     }
-    
-    
+
 }
