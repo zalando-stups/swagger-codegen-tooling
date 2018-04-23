@@ -48,6 +48,8 @@ public class StandaloneCodegenerator {
 
     private CodegeneratorLogger codeGeneratorLogger = new SystemOutCodegeneratorLogger();
 
+    private String apiPrefix;
+
     private String apiFile;
 
     private String language;
@@ -120,6 +122,12 @@ public class StandaloneCodegenerator {
                 ((ConfigurableCodegenConfig) codegenConfig).skipModelGeneration();
             }
 
+            if (skipApigeneration && apiPrefix == null) {
+                ((ConfigurableCodegenConfig) codegenConfig).setApiPrefix("");
+            } else {
+                // config
+                ((ConfigurableCodegenConfig) codegenConfig).setApiPrefix(apiPrefix);
+            }
             if (skipApigeneration && apiPackage == null) {
                 ((ConfigurableCodegenConfig) codegenConfig).setApiPackage("");
             } else {
@@ -131,7 +139,6 @@ public class StandaloneCodegenerator {
             } else {
                 ((ConfigurableCodegenConfig) codegenConfig).setModelPackage(modelPackage);
             }
-
             if (enable303) {
                 getLog().info("JSR 303 enabled ...");
                 if (((ConfigurableCodegenConfig) codegenConfig).is303Supported()) {
@@ -294,6 +301,8 @@ public class StandaloneCodegenerator {
 
         private CodegeneratorLogger codeGeneratorLogger;
 
+        private String apiPrefix;
+
         private String apiFile;
 
         private String language;
@@ -318,6 +327,11 @@ public class StandaloneCodegenerator {
 
         public CodegeneratorBuilder withApiFilePath(final String pathToApiFile) {
             this.apiFile = pathToApiFile;
+            return this;
+        }
+
+        public CodegeneratorBuilder withApiPrefix(final String apiPrefix) {
+            this.apiPrefix = apiPrefix;
             return this;
         }
 
@@ -384,6 +398,7 @@ public class StandaloneCodegenerator {
         public StandaloneCodegenerator build() {
             final StandaloneCodegenerator generator = new StandaloneCodegenerator();
 
+            generator.apiPrefix = this.apiPrefix;
             generator.apiFile = this.apiFile;
             generator.language = this.language;
             generator.outputDirectory = this.outputDirectory;

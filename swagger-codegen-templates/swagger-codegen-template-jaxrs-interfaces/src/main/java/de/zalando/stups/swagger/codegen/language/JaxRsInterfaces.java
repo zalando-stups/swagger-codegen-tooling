@@ -45,6 +45,12 @@ import io.swagger.models.properties.Property;
 public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig, ConfigurableCodegenConfig {
 
     protected String sourceFolder = "";
+    private String apiPrefix = "";
+
+    @Override
+    public void setApiPrefix(String apiPrefix) {
+        this.apiPrefix = apiPrefix;
+    }
 
     public CodegenType getTag() {
         return CodegenType.SERVER;
@@ -250,7 +256,7 @@ public class JaxRsInterfaces extends JavaClientCodegen implements CodegenConfig,
         }
 
         name = sanitizeName(name);
-        return camelize(name) + "Api";
+        return apiPrefix + camelize(name) + "Api";
     }
 
     @Override
