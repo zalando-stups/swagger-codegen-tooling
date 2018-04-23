@@ -57,6 +57,13 @@ public class ConfigurableCodegenConfigTest {
 
         private boolean skipModelGeneration = false;
 
+        private String apiPrefix;
+
+        @Override
+        public void setApiPrefix(String apiPrefix) {
+            this.apiPrefix = apiPrefix;
+        }
+
         @Override
         public void skipApiGeneration() {
             skipApiGeneration = true;

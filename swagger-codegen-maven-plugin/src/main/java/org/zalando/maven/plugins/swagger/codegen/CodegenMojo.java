@@ -59,6 +59,9 @@ public class CodegenMojo extends AbstractMojo {
     private String apiPackage = "";
 
     @Parameter
+    private String apiPrefix = "";
+
+    @Parameter
     private String modelPackage = "";
 
     @Parameter(defaultValue = "false")
@@ -91,6 +94,7 @@ public class CodegenMojo extends AbstractMojo {
         final StandaloneCodegenerator generator = StandaloneCodegenerator.builder().withApiFilePath(apiFile)
                                                                    .forLanguage(language)
                                                                    .writeResultsTo(outputDirectory)
+                                                                   .withApiPrefix(apiPrefix)
                                                                    .withApiPackage(apiPackage)
                                                                    .withModelPackage(modelPackage)
                                                                    .withLogger(new MojoCodegeneratorLogger(getLog()))

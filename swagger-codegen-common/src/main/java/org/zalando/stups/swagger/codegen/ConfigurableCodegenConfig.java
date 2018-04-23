@@ -28,6 +28,8 @@ public interface ConfigurableCodegenConfig {
 
     void setApiPackage(String apiPackage);
 
+    void setApiPrefix(String apiPrefix);
+
     void setModelPackage(String modelPackage);
 
     boolean is303Supported();

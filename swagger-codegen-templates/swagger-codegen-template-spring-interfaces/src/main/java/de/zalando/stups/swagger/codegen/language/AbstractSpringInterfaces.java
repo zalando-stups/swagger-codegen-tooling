@@ -50,6 +50,13 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
 
     private boolean skipModelGeneration = false;
 
+    private String apiPrefix = "";
+
+    @Override
+    public void setApiPrefix(String apiPrefix) {
+        this.apiPrefix = apiPrefix;
+    }
+
     @Override
     public void skipApiGeneration() {
         skipApiGeneration = true;
@@ -274,6 +281,6 @@ public class AbstractSpringInterfaces extends JavaClientCodegen implements Codeg
         }
 
         name = sanitizeName(name);
-        return camelize(name) + "Api";
+        return apiPrefix + camelize(name) + "Api";
     }
 }
